@@ -1,0 +1,86 @@
+# To fix untracked files:
+# git rm -r --cached .
+# This removes any changed files from the index(staging area), then just run:
+# git add .
+# Commit it:
+# git commit -m ".gitignore is now working"
+
+# git clean -n
+# git clean -f -d
+# git status
+
+# To delete entire commit history
+# Checkout:
+# git checkout --orphan latest_branch
+# Commit the changes:
+# git commit -am "commit message"
+# Delete the branch:
+# git branch -D master
+# Rename the current branch to master:
+# git branch -m master
+# Finally, force update your repository:
+# git push -f origin master
+
+
+
+# Created by https://www.gitignore.io/api/macos,windows,netbeans
+
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nbactions.xml
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+
+# End of https://www.gitignore.io/api/macos,windows,netbeans
