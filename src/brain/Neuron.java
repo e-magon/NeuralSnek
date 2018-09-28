@@ -6,6 +6,7 @@ public class Neuron {
     private double soglia; //Punto di discontinuità (prima specie) della funzione
     private double inputNeuronValue; //Valore di input (utilizzato nei neuroni di input)
     private boolean isInputNeuron;  //Flag per controllare che sia input
+    
     private String nome; //Nome del neurone nella forma LayerX_NeuronY
     private ArrayList <Neuron> previousNeurons = new ArrayList <>(0); //ArrayList con i neuroni del livello precedente
     //ArrayList con tutti i pesi dei valori in entrata (stessa lunghezza di previousNeurons
@@ -18,9 +19,9 @@ public class Neuron {
         nome = "";
     }
     
-    public Neuron(boolean logging, boolean flag) {
+    public Neuron(boolean logging, boolean isInput) {
         //Se viene passato con due flag viene assegnato al valore che indica se è input
-        isInputNeuron = flag;
+        isInputNeuron = isInput;
         this.logging = logging;
         nome = "";
     }
@@ -37,7 +38,7 @@ public class Neuron {
         }
     }    
     
-    //Calcola il risultato in base agli input e i pesi
+    //Calcola il risultato in base agli input e i pesi}——}
     public double compute() {
         //Se è un neurone di input, ritorna semplicemente il valore che ha
         //in ingresso moltiplicato per il primo (e unico) peso che ha.
