@@ -36,9 +36,9 @@ public class Neuron {
                 System.out.print(elem.getNome() + " ");
             System.out.println();
         }
-    }    
+    }
     
-    //Calcola il risultato in base agli input e i pesi}——}
+    //Calcola il risultato in base agli input e i pesi
     public double compute() {
         //Se è un neurone di input, ritorna semplicemente il valore che ha
         //in ingresso moltiplicato per il primo (e unico) peso che ha.
@@ -55,6 +55,7 @@ public class Neuron {
         //Se ha lo stesso numero di pesi e input, cioè è impostato correttamente
         else if((previousNeurons.size() == inputWeights.size())) {
             double result = 0;
+            
             for (int k=0; k<inputWeights.size(); k++) {
                 double risultatoPrecedente = previousNeurons.get(k).compute() * inputWeights.get(k);
                 result += risultatoPrecedente;
@@ -77,6 +78,7 @@ public class Neuron {
                 return 0;
             }
         }
+        
         else {
             System.out.printf("Errore nel neutrone " + this.getNome() +
                     ": %d connessioni ma ci sono %d pesi\n",

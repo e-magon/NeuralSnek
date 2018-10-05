@@ -7,6 +7,7 @@ public class Network {
     private int hiddenLayersNumber; //Numero di livelli nascosti
     private int hiddenNeuronsNumber; //Numero di neuroni per ogni livello nascosto
     private int outputNeuronsNumber; //Numero di neuroni output
+    
     private boolean logging;
     
     private Neuron[][] network; //Matrice di neuroni
@@ -29,7 +30,7 @@ public class Network {
         for (int k=0; k<inputNeuronsNumber; k++) {
             //Usa il costruttore per quelli di input
             network[0][k] = new Neuron(logging, true);
-            //Layer0_NeuronK
+            //Imposta il nome: Layer0_NeuronK
             network[0][k].setName("L0_N" + k);
         }
         
@@ -47,6 +48,7 @@ public class Network {
 
         //Alloca spazio per i neuroni di output
         network[hiddenLayersNumber+1] = new Neuron[outputNeuronsNumber];
+        
         //Crea i neuroni di output
         for (int c=0; c<outputNeuronsNumber; c++) { //c è il numero del neurone di quel livello
             network[hiddenLayersNumber+1][c] = new Neuron(logging);
@@ -72,10 +74,12 @@ public class Network {
             //Per ogni neurone di questo livello:
             if (logging)
                 System.out.println("Opero al livello " + (k));
+            
             for (Neuron thisNeuron : network[k]) {
                 //Collega ogni neurone del livello precedente
                 if (logging)
                     System.out.println("\tOpero sul neurone " + thisNeuron.getNome());
+                
                 for (Neuron prevNeuron : network[k-1]) {
                     if (logging)
                         System.out.println("\t\tLo collego al neurone " + prevNeuron.getNome());
@@ -128,16 +132,15 @@ public class Network {
                     //Viene riempito l'ArrayList con l'array originale
                     pesiDaPassare.add(tmp);
                     
-                if (logging)
-                System.out.print("Cambio i pesi in entrata al neurone " +
-                        network[layer][dest].getNome() + ", con i seguenti: ");
-                for (double weight : newPesi)
-                    if (logging)
-                        System.out.printf("%.3f ", weight);
-                if (logging)
-                    System.out.println();
-                
                 if (logging) {
+                    System.out.print("Cambio i pesi in entrata al neurone " +
+                            network[layer][dest].getNome() + ", con i seguenti: ");
+                
+                    for (double weight : newPesi)
+                        System.out.printf("%.3f ", weight);
+
+                    System.out.println();
+                    
                     System.out.print("Prima erano: ");
                     for (double weight : network[layer][dest].getInputWeights())
                         System.out.printf("%.3f ", weight);
@@ -149,11 +152,11 @@ public class Network {
                 network[layer][dest].setInputWeights(pesiDaPassare);
             }
             else
-                System.out.println("Il neurone " + dest +
+                System.err.println("Il neurone " + dest +
                         " non è stato trovato nel livello " + layer);
         }
         else
-            System.out.println("Il livello " + layer + " non esiste");
+            System.err.println("Il livello " + layer + " non esiste");
     }
     
     //Imposta il valore in input di un neurone d'input
@@ -215,11 +218,11 @@ public class Network {
                 return network[layer][dest].getInputWeights();
             }
             else
-                System.out.println("Il neurone " + dest +
+                System.err.println("Il neurone " + dest +
                         " non è stato trovato nel livello " + layer);
         }
         else
-            System.out.println("Il livello " + layer + " non esiste");
+            System.err.println("Il livello " + layer + " non esiste");
         return null;
     }
     
@@ -233,11 +236,11 @@ public class Network {
                 return network[layer][dest].getSoglia();
             }
             else
-                System.out.println("Il neurone " + dest +
+                System.err.println("Il neurone " + dest +
                         " non è stato trovato nel livello " + layer);
         }
         else
-            System.out.println("Il livello " + layer + " non esiste");
+            System.err.println("Il livello " + layer + " non esiste");
         return 0;
     }
     
@@ -287,7 +290,7 @@ public class Network {
     }
     
     public int getTotalLayersNumber() {
-        return hiddenLayersNumber+2;
+        return hiddenLayersNumber + 2;
     }
     
     public Neuron[][] getNetwork() {
