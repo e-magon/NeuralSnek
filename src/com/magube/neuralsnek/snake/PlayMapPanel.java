@@ -1,6 +1,6 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.utils.SnakePlayer;
+import com.magube.neuralsnek.snake.utils.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -11,6 +11,7 @@ public class PlayMapPanel extends JPanel {
     private int telaH;
 
     private SnakePlayer player;
+    private Apple apple;
 
     private final int blockSize;
     private final int actualBlockSize;
@@ -31,7 +32,6 @@ public class PlayMapPanel extends JPanel {
         appleColor = Color.RED;
         gridColor = Color.BLACK;
         bgColor = Color.GRAY;
-
     }
 
     @Override
@@ -56,16 +56,28 @@ public class PlayMapPanel extends JPanel {
             drawLine(g, 0, k, telaW, 1, gridColor);
         }
 
-        for (int[] blocco : player.getSnakePlayer()) {
-            cord = getPixelCoords(blocco[0], blocco[1]);
-            drawBlock(g, cord[0], cord[1], headColor);
-        }
+        if (player != null) {
+            int thisX, thisY;
 
-        //Serpente statico di prova
-//        drawBlock(g, 30, 30, headColor);
-//        drawBlock(g, 30, 50, bodyColor);
-//        drawBlock(g, 30, 70, bodyColor);
-//        drawBlock(g, 30, 90, bodyColor);
+            //Disegno del serpente
+            for (int thisBlock = 0; thisBlock < player.getSnakePlayer().size(); thisBlock++) {
+                thisX = player.getSnakePlayer().get(thisBlock)[0];
+                thisY = player.getSnakePlayer().get(thisBlock)[1];
+                cord = getPixelCoords(thisX, thisY);
+
+                if (thisBlock == 0) {
+                    drawBlock(g, cord[0], cord[1], headColor);
+                } else {
+                    drawBlock(g, cord[0], cord[1], bodyColor);
+                }
+            }
+
+            //Disegno della mela
+            if (apple != null && apple.getCoord() != null) {
+                cord = getPixelCoords(apple.getCoord()[0], apple.getCoord()[1]);
+                drawBlock(g, cord[0], cord[1], appleColor);
+            }
+        }
     }
 
     public void drawLine(Graphics g, int corX, int corY, int widht, int height, Color color) {
@@ -88,11 +100,27 @@ public class PlayMapPanel extends JPanel {
      * @return array di int da 2 celle contenente la x e la y in pixel del
      * centro del blocco specificato in input
      */
-    private int[] getPixelCoords(int x, int y) {
+    public int[] getPixelCoords(int x, int y) {
         return new int[]{(x * blockSize) - 10, (y * blockSize) - 10};
     }
 
     public void setPlayer(SnakePlayer player) {
         this.player = player;
+    }
+
+    public void setApple(Apple apple) {
+        this.apple = apple;
+    }
+
+    public int getTelaW() {
+        return telaW;
+    }
+
+    public int getTelaH() {
+        return telaH;
+    }
+
+    public int getBlockSize() {
+        return blockSize;
     }
 }
