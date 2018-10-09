@@ -1,10 +1,21 @@
 package com.magube.neuralsnek.snake;
 
+import com.magube.neuralsnek.snake.utils.SnakePlayer;
 import java.awt.event.KeyEvent;
 
 public class GameWindow extends javax.swing.JFrame {
+
+    private SnakePlayer player;
+    GameThread gameThread;
+
     public GameWindow() {
         initComponents();
+
+        player = new SnakePlayer();
+        gameThread = new GameThread(canvas, player);
+        canvas.setPlayer(player);
+
+        gameThread.start();
     }
 
     /**
@@ -63,22 +74,23 @@ public class GameWindow extends javax.swing.JFrame {
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_W:
                 //Va in alto
-                
+                gameThread.move(0);
                 break;
 
             case KeyEvent.VK_D:
                 //Va a destra
-                
+                gameThread.move(1);
                 break;
 
             case KeyEvent.VK_S:
                 //Va in basso
-                
+                gameThread.move(2);
                 break;
 
             case KeyEvent.VK_A:
-                //Va a sinistra
-                
+            //Va a sinistra
+                gameThread.move(3);
+                break;
         }
     }//GEN-LAST:event_formKeyPressed
 

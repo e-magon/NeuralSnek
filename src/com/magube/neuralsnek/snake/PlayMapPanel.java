@@ -1,5 +1,6 @@
 package com.magube.neuralsnek.snake;
 
+import com.magube.neuralsnek.snake.utils.SnakePlayer;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
@@ -9,6 +10,8 @@ public class PlayMapPanel extends JPanel {
     private int telaW;
     private int telaH;
 
+    private SnakePlayer player;
+
     private final int blockSize;
     private final int actualBlockSize;
     private final Color headColor;
@@ -17,15 +20,18 @@ public class PlayMapPanel extends JPanel {
     private final Color gridColor;
     private final Color bgColor;
 
+    private int[] cord;
+
     public PlayMapPanel() {
         blockSize = 20;
         actualBlockSize = blockSize - 1;
-        
+
         headColor = Color.GREEN;
         bodyColor = new Color(0, 180, 0); //Verde scuro
         appleColor = Color.RED;
         gridColor = Color.BLACK;
-        bgColor = Color.LIGHT_GRAY;
+        bgColor = Color.GRAY;
+
     }
 
     @Override
@@ -34,7 +40,7 @@ public class PlayMapPanel extends JPanel {
 
         telaW = this.getWidth();
         telaH = this.getHeight();
-        System.out.println(telaW + " - " + telaH);
+        //System.out.println(telaW + " - " + telaH);
 
         this.setBackground(bgColor);
 
@@ -49,11 +55,17 @@ public class PlayMapPanel extends JPanel {
         for (int k = 0; k < telaH; k += blockSize) {
             drawLine(g, 0, k, telaW, 1, gridColor);
         }
-        
-        drawBlock(g, 30, 30, headColor);
-        drawBlock(g, 30, 50, bodyColor);
-        drawBlock(g, 30, 70, bodyColor);
-        drawBlock(g, 30, 90, bodyColor);
+
+        for (int[] blocco : player.getSnakePlayer()) {
+            cord = getPixelCoords(blocco[0], blocco[1]);
+            drawBlock(g, cord[0], cord[1], headColor);
+        }
+
+        //Serpente statico di prova
+//        drawBlock(g, 30, 30, headColor);
+//        drawBlock(g, 30, 50, bodyColor);
+//        drawBlock(g, 30, 70, bodyColor);
+//        drawBlock(g, 30, 90, bodyColor);
     }
 
     public void drawLine(Graphics g, int corX, int corY, int widht, int height, Color color) {
@@ -64,5 +76,23 @@ public class PlayMapPanel extends JPanel {
     public void drawBlock(Graphics g, int x, int y, Color color) {
         g.setColor(color);
         g.fillRect(x - actualBlockSize / 2, y - actualBlockSize / 2, actualBlockSize, actualBlockSize);
+    }
+
+    /**
+     * Metodo che trasforma le coordinate "astratte" della griglia di gioco in
+     * vere e proprie coordinate in pixel. Usato per disegnare i blocchi nella
+     * griglia di gioco.
+     *
+     * @param x coordinata x della griglia di gioco (parte da 1, a sinistra)
+     * @param y coordinata y della criglia di gioco (parte da 1, in alto)
+     * @return array di int da 2 celle contenente la x e la y in pixel del
+     * centro del blocco specificato in input
+     */
+    private int[] getPixelCoords(int x, int y) {
+        return new int[]{(x * blockSize) - 10, (y * blockSize) - 10};
+    }
+
+    public void setPlayer(SnakePlayer player) {
+        this.player = player;
     }
 }
