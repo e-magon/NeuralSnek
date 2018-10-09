@@ -2,8 +2,9 @@ package com.magube.neuralsnek.snake;
 
 import javax.swing.UIManager;
 
-public class LauncherGUI extends javax.swing.JFrame {
-    public LauncherGUI() {
+public class LauncherWindow extends javax.swing.JFrame {
+
+    public LauncherWindow() {
         initComponents();
     }
 
@@ -66,9 +67,11 @@ public class LauncherGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNewGameActionPerformed
-        SnakeGame game = new SnakeGame();
+        GameWindow game = new GameWindow();
         game.setLocationRelativeTo(null);
+        game.setTitle("Snake - Manuale");
         game.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_butNewGameActionPerformed
 
     public static void main(String args[]) {
@@ -78,11 +81,10 @@ public class LauncherGUI extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
-        
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LauncherGUI finestra = new LauncherGUI();
+                LauncherWindow finestra = new LauncherWindow();
                 finestra.setLocationRelativeTo(null);
                 finestra.setVisible(true);
             }

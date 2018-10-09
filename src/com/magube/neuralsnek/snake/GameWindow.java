@@ -2,21 +2,9 @@ package com.magube.neuralsnek.snake;
 
 import java.awt.event.KeyEvent;
 
-public class SnakeGame extends javax.swing.JFrame {
-    private final int telaH = 480;
-    private final int telaW = 700;
-    
-    private final int blockSize = 20;
-    
-    private GameThread gameThread;
-    
-    public SnakeGame() {
+public class GameWindow extends javax.swing.JFrame {
+    public GameWindow() {
         initComponents();
-        tela.setTelaH(telaH);
-        tela.setTelaW(telaW);
-        
-        gameThread = new GameThread(tela, telaW, telaH, blockSize);
-        gameThread.start();
     }
 
     /**
@@ -28,10 +16,10 @@ public class SnakeGame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tela = new com.magube.neuralsnek.snake.JTela();
+        canvas = new com.magube.neuralsnek.snake.PlayMapPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Snake");
+        setTitle("Titolo");
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -39,15 +27,15 @@ public class SnakeGame extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout telaLayout = new javax.swing.GroupLayout(tela);
-        tela.setLayout(telaLayout);
-        telaLayout.setHorizontalGroup(
-            telaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+        javax.swing.GroupLayout canvasLayout = new javax.swing.GroupLayout(canvas);
+        canvas.setLayout(canvasLayout);
+        canvasLayout.setHorizontalGroup(
+            canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 701, Short.MAX_VALUE)
         );
-        telaLayout.setVerticalGroup(
-            telaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+        canvasLayout.setVerticalGroup(
+            canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 481, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -56,14 +44,14 @@ public class SnakeGame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -72,29 +60,29 @@ public class SnakeGame extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         //Quando viene premuta una freccia
-        switch(evt.getKeyCode()) {
+        switch (evt.getKeyCode()) {
             case KeyEvent.VK_W:
                 //Va in alto
-                gameThread.moveSnake(0);
-                break;
                 
+                break;
+
             case KeyEvent.VK_D:
                 //Va a destra
-                gameThread.moveSnake(1);
-                break;
                 
+                break;
+
             case KeyEvent.VK_S:
                 //Va in basso
-                gameThread.moveSnake(2);
-                break;
                 
+                break;
+
             case KeyEvent.VK_A:
                 //Va a sinistra
-                gameThread.moveSnake(3);
+                
         }
     }//GEN-LAST:event_formKeyPressed
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.magube.neuralsnek.snake.JTela tela;
+    private com.magube.neuralsnek.snake.PlayMapPanel canvas;
     // End of variables declaration//GEN-END:variables
 }
