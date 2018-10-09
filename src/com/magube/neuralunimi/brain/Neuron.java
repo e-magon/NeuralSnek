@@ -1,4 +1,4 @@
-package brain;
+package com.magube.neuralunimi.brain;
 
 import java.util.ArrayList;
 
