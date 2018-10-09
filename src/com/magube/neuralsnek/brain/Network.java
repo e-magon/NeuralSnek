@@ -3,10 +3,10 @@ package com.magube.neuralsnek.brain;
 import java.util.ArrayList;
 
 public class Network {
-    private int inputNeuronsNumber; //Numero di neuroni input
-    private int hiddenLayersNumber; //Numero di livelli nascosti
-    private int hiddenNeuronsNumber; //Numero di neuroni per ogni livello nascosto
-    private int outputNeuronsNumber; //Numero di neuroni output
+    private final int inputNeuronsNumber; //Numero di neuroni input
+    private final int hiddenLayersNumber; //Numero di livelli nascosti
+    private final int hiddenNeuronsNumber; //Numero di neuroni per ogni livello nascosto
+    private final int outputNeuronsNumber; //Numero di neuroni output
     
     private boolean logging;
     

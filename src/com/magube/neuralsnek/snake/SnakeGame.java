@@ -1,19 +1,22 @@
 package com.magube.neuralsnek.snake;
 
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
 
 public class SnakeGame extends javax.swing.JFrame {
     private final int telaH = 480;
     private final int telaW = 700;
     
-    private final int blocco = 20;
+    private final int blockSize = 20;
+    
+    private GameThread gameThread;
     
     public SnakeGame() {
         initComponents();
-//        initTela();
-        test();
+        tela.setTelaH(telaH);
+        tela.setTelaW(telaW);
+        
+        gameThread = new GameThread(tela, telaW, telaH, blockSize);
+        gameThread.start();
     }
 
     /**
@@ -30,10 +33,9 @@ public class SnakeGame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snake");
         setResizable(false);
-
-        tela.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                telaMouseClicked(evt);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -68,48 +70,30 @@ public class SnakeGame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void telaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_telaMouseClicked
-        drawBlock(evt.getX(), evt.getY(), Color.RED);
-        //drawVLine(10, 1);
-    }//GEN-LAST:event_telaMouseClicked
-
-    private void test() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SnakeGame.class.getName()).log(Level.SEVERE, null, ex);
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        //Quando viene premuta una freccia
+        switch(evt.getKeyCode()) {
+            case KeyEvent.VK_W:
+                //Va in alto
+                gameThread.moveSnake(0);
+                break;
+                
+            case KeyEvent.VK_D:
+                //Va a destra
+                gameThread.moveSnake(1);
+                break;
+                
+            case KeyEvent.VK_S:
+                //Va in basso
+                gameThread.moveSnake(2);
+                break;
+                
+            case KeyEvent.VK_A:
+                //Va a sinistra
+                gameThread.moveSnake(3);
         }
-        drawBlock(50, 50, Color.RED);
-    }
-    
-    private void initTela() {
-        //Sfondo nero
-        tela.setBackground(Color.BLACK);
-        
-        //Creazione linee verticali
-        //Ogni 20 pixel, una riga
-        int numLinee = telaW / blocco;
-        int xIniz = 1;
-        
-        for (numLinee=numLinee; numLinee > 0; numLinee--) {
-            System.out.println("Ok disegno linea numero " + numLinee);
-            //drawVLine(xIniz, xIniz+1, Color.WHITE);
-            drawVLine(50, 50, Color.WHITE);
-            xIniz++;
-        }
-        
-        
-    }
-    
-    private void drawBlock(int x, int y, Color color) {
-        tela.drawBlock(tela.getGraphics(), x, y, color);
-        System.out.printf("Disegnato a %d %d\n", x, y);
-    }
-    
-    private void drawVLine(int x, int y, Color color) {
-        tela.drawLine(tela.getGraphics(), x, y, 2, 50, color);
-    }
-    
+    }//GEN-LAST:event_formKeyPressed
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.magube.neuralsnek.snake.JTela tela;
     // End of variables declaration//GEN-END:variables
