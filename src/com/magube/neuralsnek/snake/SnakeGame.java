@@ -1,4 +1,4 @@
-package com.magube.neuralunimi.snake;
+package com.magube.neuralsnek.snake;
 
 import java.awt.Color;
 import java.util.logging.Level;
@@ -25,7 +25,7 @@ public class SnakeGame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tela = new com.magube.neuralunimi.snake.JTela();
+        tela = new com.magube.neuralsnek.snake.JTela();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snake");
@@ -111,6 +111,6 @@ public class SnakeGame extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.magube.neuralunimi.snake.JTela tela;
+    private com.magube.neuralsnek.snake.JTela tela;
     // End of variables declaration//GEN-END:variables
 }

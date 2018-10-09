@@ -1,4 +1,4 @@
-package com.magube.neuralunimi.snake;
+package com.magube.neuralsnek.snake;
 
 import java.awt.Color;
 import java.awt.Graphics;

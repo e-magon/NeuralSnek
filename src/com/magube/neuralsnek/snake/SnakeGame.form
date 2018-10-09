@@ -43,7 +43,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="com.magube.neuralunimi.snake.JTela" name="tela">
+    <Container class="com.magube.neuralsnek.snake.JTela" name="tela">
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="telaMouseClicked"/>
       </Events>
