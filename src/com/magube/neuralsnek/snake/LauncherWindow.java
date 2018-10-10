@@ -25,7 +25,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         setTitle("Snake");
         setResizable(false);
 
-        butNewGame.setText("Partita manuale");
+        butNewGame.setText("Gioca a Snake");
         butNewGame.setFocusPainted(false);
         butNewGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
