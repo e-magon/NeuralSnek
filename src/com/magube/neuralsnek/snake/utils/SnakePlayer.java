@@ -56,6 +56,43 @@ public class SnakePlayer {
         return player.get(0);   //Ritorna la posizione nuova della testa
     }
 
+    /**
+     * Ritorna vero se la prossima mossa snake colpisce una parte del suo corpo
+     *
+     * @return true se colpisce se stesso
+     */
+    public boolean checkMove() {
+        //La testa avanza di 1 rispetto alla sua direzione
+        int[] newCoords = player.get(0).clone();
+        switch (direzioneTesta) {
+            case 0:    //su, stessa x, y-1
+                newCoords[1]--;
+                break;
+
+            case 1:    //destra, x+1, stessa y
+                newCoords[0]++;
+                break;
+
+            case 2:    //giù, stessa x, y+1
+                newCoords[1]++;
+                break;
+
+            case 3:    //sinistra, x-1, stessa y
+                newCoords[0]--;
+                break;
+        }
+
+        for (int thisBlocco = 1; thisBlocco < player.size(); thisBlocco++) {
+            //Controlla che la prossima posizione non sia uguale a quella di un blocco del serpente
+            int thisX = player.get(thisBlocco)[0], thisY = player.get(thisBlocco)[1];
+            if ((newCoords[0] == thisX) && (newCoords[1] == thisY)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void setHead(int x, int y) {
         if (player.size() == 0) {
             player.add(new int[]{x, y});

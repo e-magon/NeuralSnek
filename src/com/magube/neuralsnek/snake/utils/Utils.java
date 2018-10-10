@@ -22,8 +22,8 @@ public class Utils {
      * @return array di coordinate x, y generate
      */
     public static int[] randomPos(int maxX, int maxY) {
-        int x = rn.nextInt(maxX + 1) + 1;
-        int y = rn.nextInt(maxY + 1) + 1;
+        int x = rn.nextInt(maxX) + 1;
+        int y = rn.nextInt(maxY) + 1;
 
         return new int[]{x, y};
     }

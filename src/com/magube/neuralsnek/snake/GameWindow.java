@@ -9,19 +9,24 @@ public class GameWindow extends javax.swing.JFrame {
     private final SnakePlayer player;
     private final Apple apple;
     private final GameThread gameThread;
+    private Boolean isPerso;
 
     private boolean paused = true;
 
     public GameWindow() {
         initComponents();
         this.getContentPane().setBackground(new Color(70, 70, 70));
+
         labelPerso.setVisible(false);
 
         player = new SnakePlayer();
         apple = new Apple();
-        gameThread = new GameThread(canvas, player, apple, labelPerso);
+        gameThread = new GameThread(canvas, player, apple, isPerso, labelPerso);
+        //gameThread.start();   Il gioco viene avviato dopo aver premuto un pulsante
+    }
 
-        //gameThread.start();
+    private void initGame() {
+
     }
 
     /**
@@ -36,7 +41,7 @@ public class GameWindow extends javax.swing.JFrame {
         canvas = new com.magube.neuralsnek.snake.PlayMapPanel();
         labelPerso = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Titolo");
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
