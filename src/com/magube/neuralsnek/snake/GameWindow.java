@@ -9,7 +9,6 @@ public class GameWindow extends javax.swing.JFrame {
     private final SnakePlayer player;
     private final Apple apple;
     private final GameThread gameThread;
-    private Boolean isPerso;
 
     private boolean paused = true;
 
@@ -21,12 +20,8 @@ public class GameWindow extends javax.swing.JFrame {
 
         player = new SnakePlayer();
         apple = new Apple();
-        gameThread = new GameThread(canvas, player, apple, isPerso, labelPerso);
+        gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso);
         //gameThread.start();   Il gioco viene avviato dopo aver premuto un pulsante
-    }
-
-    private void initGame() {
-
     }
 
     /**
@@ -40,6 +35,7 @@ public class GameWindow extends javax.swing.JFrame {
 
         canvas = new com.magube.neuralsnek.snake.PlayMapPanel();
         labelPerso = new javax.swing.JLabel();
+        labelPunti = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Titolo");
@@ -65,6 +61,10 @@ public class GameWindow extends javax.swing.JFrame {
         labelPerso.setForeground(new java.awt.Color(255, 0, 0));
         labelPerso.setText("PERSO!");
 
+        labelPunti.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        labelPunti.setForeground(new java.awt.Color(255, 255, 255));
+        labelPunti.setText("Punteggio: 0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,11 +72,14 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(canvas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelPerso)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelPunti)
+                        .addGap(44, 44, 44))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +87,9 @@ public class GameWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(canvas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelPerso)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPerso)
+                    .addComponent(labelPunti))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -124,5 +129,6 @@ public class GameWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.magube.neuralsnek.snake.PlayMapPanel canvas;
     private javax.swing.JLabel labelPerso;
+    private javax.swing.JLabel labelPunti;
     // End of variables declaration//GEN-END:variables
 }

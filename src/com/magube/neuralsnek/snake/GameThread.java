@@ -9,19 +9,22 @@ public class GameThread extends Thread {
     private final SnakePlayer player;
     private Apple apple;
 
-    Boolean isPerso;
-
     boolean moved = false;
     private final int targetFps;
+    int punteggio;
 
     private final JLabel labelPerso;
+    private final JLabel labelPunti;
 
-    public GameThread(PlayMapPanel canvas, SnakePlayer player, Apple apple, Boolean isPerso, JLabel labelPerso) {
+    public GameThread(PlayMapPanel canvas, SnakePlayer player, Apple apple,
+            JLabel labelPunti, JLabel labelPerso) {
         this.canvas = canvas;
         this.player = player;
         this.apple = apple;
-        this.isPerso = isPerso;
         this.labelPerso = labelPerso;
+        this.labelPunti = labelPunti;
+
+        punteggio = 0;
 
         canvas.setApple(apple);
         canvas.setPlayer(player);
@@ -37,7 +40,7 @@ public class GameThread extends Thread {
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);
         apple.newCoord();
-        isPerso = false;
+        boolean isPerso = false;
 
         while (!isPerso) {
             boolean snakeHit = player.checkMove();
@@ -55,6 +58,8 @@ public class GameThread extends Thread {
 
                 if (nextPos[0] == appleX && nextPos[1] == appleY) {
                     System.out.println("Mela mangiata");
+                    punteggio++;
+                    labelPunti.setText("Punteggio: " + punteggio);
                     player.addBlock();
                     apple.newCoord();
                 }
@@ -62,6 +67,7 @@ public class GameThread extends Thread {
                 canvas.repaint();
                 moved = false;
             }
+
             Utils.sleep((int) ((1f / targetFps) * 1000));
         }
     }
