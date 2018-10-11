@@ -1,27 +1,33 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.utils.*;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 public class GameWindow extends javax.swing.JFrame {
 
-    private final SnakePlayer player;
-    private final Apple apple;
-    private final GameThread gameThread;
+    private SnakePlayer player;
+    private Apple apple;
+    private GameThread gameThread;
 
-    private boolean paused = true;
+    private boolean paused;
 
     public GameWindow() {
         initComponents();
         this.getContentPane().setBackground(new Color(70, 70, 70));
 
+        initGame();
+    }
+
+    private void initGame() {
         labelPerso.setVisible(false);
+        labelPunti.setText("Punteggio: 0");
+        labelComandi.setText("Premi W per iniziare");
+        paused = true;
 
         player = new SnakePlayer();
         apple = new Apple();
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso);
-        //gameThread.start();   Il gioco viene avviato dopo aver premuto un pulsante
+        canvas.repaint();
     }
 
     /**
@@ -36,8 +42,10 @@ public class GameWindow extends javax.swing.JFrame {
         canvas = new com.magube.neuralsnek.snake.PlayMapPanel();
         labelPerso = new javax.swing.JLabel();
         labelPunti = new javax.swing.JLabel();
+        butRiavvia = new javax.swing.JButton();
+        labelComandi = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Titolo");
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -65,6 +73,17 @@ public class GameWindow extends javax.swing.JFrame {
         labelPunti.setForeground(new java.awt.Color(255, 255, 255));
         labelPunti.setText("Punteggio: 0");
 
+        butRiavvia.setText("RIavvia");
+        butRiavvia.setFocusable(false);
+        butRiavvia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butRiavviaActionPerformed(evt);
+            }
+        });
+
+        labelComandi.setForeground(new java.awt.Color(255, 255, 255));
+        labelComandi.setText("Premi W per iniziare");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,6 +97,10 @@ public class GameWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelPerso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelComandi, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(butRiavvia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelPunti)
                         .addGap(44, 44, 44))))
         );
@@ -89,19 +112,25 @@ public class GameWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPerso)
-                    .addComponent(labelPunti))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(labelPunti)
+                    .addComponent(butRiavvia)
+                    .addComponent(labelComandi))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        //Quando viene premuta una freccia
-        if (paused) {
+        //Se il gioco è in pausa, con il tasto W inizia
+        if (paused && evt.getKeyCode() == KeyEvent.VK_W) {
             gameThread.start();
+            labelComandi.setText("W, A, S, D per muoversi");
             paused = false;
-        } else {
+        }
+        
+        //Altrimenti controlla il tasto
+        else {
             switch (evt.getKeyCode()) {
                 case KeyEvent.VK_W:
                     //Va in alto
@@ -126,8 +155,15 @@ public class GameWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formKeyPressed
 
+    private void butRiavviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butRiavviaActionPerformed
+        gameThread.stop();
+        initGame();
+    }//GEN-LAST:event_butRiavviaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butRiavvia;
     private com.magube.neuralsnek.snake.PlayMapPanel canvas;
+    private javax.swing.JLabel labelComandi;
     private javax.swing.JLabel labelPerso;
     private javax.swing.JLabel labelPunti;
     // End of variables declaration//GEN-END:variables

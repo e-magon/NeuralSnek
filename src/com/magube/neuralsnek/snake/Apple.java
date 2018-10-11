@@ -1,4 +1,6 @@
-package com.magube.neuralsnek.snake.utils;
+package com.magube.neuralsnek.snake;
+
+import com.magube.neuralsnek.snake.utils.Utils;
 
 public class Apple {
 

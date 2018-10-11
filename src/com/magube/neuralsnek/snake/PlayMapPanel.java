@@ -1,6 +1,5 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.utils.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;

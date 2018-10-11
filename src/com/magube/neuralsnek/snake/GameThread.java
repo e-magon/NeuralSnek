@@ -7,9 +7,9 @@ public class GameThread extends Thread {
 
     private final PlayMapPanel canvas;
     private final SnakePlayer player;
-    private Apple apple;
+    private final Apple apple;
 
-    boolean moved = false;
+    boolean moved;
     private final int targetFps;
     int punteggio;
 
@@ -28,8 +28,9 @@ public class GameThread extends Thread {
 
         canvas.setApple(apple);
         canvas.setPlayer(player);
-
-        targetFps = 10;
+        
+        moved = false;
+        targetFps = 8;
     }
 
     @Override

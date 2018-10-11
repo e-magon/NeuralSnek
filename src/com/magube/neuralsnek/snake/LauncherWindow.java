@@ -71,6 +71,7 @@ public class LauncherWindow extends javax.swing.JFrame {
         game.setLocationRelativeTo(null);
         game.setTitle("Snake - Gioca");
         game.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_butNewGameActionPerformed
 
     public static void main(String args[]) {

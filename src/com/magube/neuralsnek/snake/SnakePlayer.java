@@ -1,4 +1,4 @@
-package com.magube.neuralsnek.snake.utils;
+package com.magube.neuralsnek.snake;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ public class SnakePlayer {
 
     //Matrice che rappresenta le coordinate del serpente.
     //Ogni riga della matrice è un blocco del serpente, e le due colonne le coordinate x ed y
-    private ArrayList<int[]> player;
+    private final ArrayList<int[]> player;
 
     //0: su    1: destra    2: giù    3: sinistra
     private int direzioneTesta;     //Usato per la direzione in cui muovere il corpo
@@ -14,9 +14,9 @@ public class SnakePlayer {
     public SnakePlayer() {
         player = new ArrayList<>(0);
 
-        player.add(new int[]{15, 15});
-        player.add(new int[]{15, 16});
-        player.add(new int[]{15, 17});
+        player.add(new int[]{18, 12});
+        player.add(new int[]{18, 13});
+        player.add(new int[]{18, 14});
     }
 
     public ArrayList<int[]> getSnakePlayer() {
