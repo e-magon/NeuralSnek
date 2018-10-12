@@ -3,6 +3,9 @@ package com.magube.neuralsnek.snake;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+//Il bottone di riavvia non deve essere focusable, altrimenti non vengono
+//ascoltati i tasti di movimento
+
 public class GameWindow extends javax.swing.JFrame {
 
     private SnakePlayer player;
@@ -13,7 +16,7 @@ public class GameWindow extends javax.swing.JFrame {
 
     public GameWindow() {
         initComponents();
-        this.getContentPane().setBackground(new Color(70, 70, 70));
+        this.getContentPane().setBackground(new Color(70, 70, 70)); //Grigio scuro
 
         initGame();
     }
@@ -27,6 +30,7 @@ public class GameWindow extends javax.swing.JFrame {
         player = new SnakePlayer();
         apple = new Apple();
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso);
+        
         canvas.repaint();
     }
 
@@ -156,7 +160,7 @@ public class GameWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void butRiavviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butRiavviaActionPerformed
-        gameThread.stop();
+        gameThread.interrupt();
         initGame();
     }//GEN-LAST:event_butRiavviaActionPerformed
 

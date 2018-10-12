@@ -1,6 +1,6 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.utils.*;
+import com.magube.neuralsnek.snake.utils.Utils;
 import javax.swing.JLabel;
 
 public class GameThread extends Thread {
@@ -9,9 +9,9 @@ public class GameThread extends Thread {
     private final SnakePlayer player;
     private final Apple apple;
 
-    boolean moved;
-    private final int targetFps;
-    int punteggio;
+    private boolean moved;
+    private final int TARGET_FPS;
+    private int punteggio;
 
     private final JLabel labelPerso;
     private final JLabel labelPunti;
@@ -28,23 +28,26 @@ public class GameThread extends Thread {
 
         canvas.setApple(apple);
         canvas.setPlayer(player);
-        
+
         moved = false;
-        targetFps = 8;
+        TARGET_FPS = 7;
     }
 
     @Override
     public void run() {
-        Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti da subito perso
+        Utils.sleep(150); //Aspetta l'inizializzazione del player, altrimenti perde subito
+
         int maxWidth = canvas.getTelaW() / canvas.getBlockSize();
         int maxHeight = canvas.getTelaH() / canvas.getBlockSize();
+
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);
         apple.newCoord();
-        boolean isPerso = false;
 
-        while (!isPerso) {
-            boolean snakeHit = player.checkMove();
+        boolean perso = false;
+
+        while (!perso) {
+            boolean snakeHit = player.checkCollision();
             int[] nextPos = player.muovi();
 
             boolean isXok = (nextPos[0] > 0) && (nextPos[0] <= maxWidth);
@@ -52,7 +55,7 @@ public class GameThread extends Thread {
 
             if (!(isXok && isYok) || snakeHit) {
                 labelPerso.setVisible(true);
-                isPerso = true;
+                perso = true;
             } else {
                 int appleX = apple.getCoord()[0];
                 int appleY = apple.getCoord()[1];
@@ -69,14 +72,14 @@ public class GameThread extends Thread {
                 moved = false;
             }
 
-            Utils.sleep((int) ((1f / targetFps) * 1000));
+            Utils.sleep((int) ((1f / TARGET_FPS) * 1000));
         }
     }
 
     public void move(int direzione) {
         if (!moved) {
             //Se la prossima direzione è l'opposto di quella attuale, non muoverti
-            if ((direzione + 2) % 4 != player.getDirezioneTesta()) {
+            if (player.getDirezioneTesta() != (direzione + 2) % 4) {
                 player.setDirezioneTesta(direzione);
                 moved = true;
             }

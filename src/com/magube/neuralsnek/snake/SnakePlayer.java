@@ -14,13 +14,10 @@ public class SnakePlayer {
     public SnakePlayer() {
         player = new ArrayList<>(0);
 
-        player.add(new int[]{18, 12});
+        setHead(18, 12);
+        setDirezioneTesta(0);
         player.add(new int[]{18, 13});
         player.add(new int[]{18, 14});
-    }
-
-    public ArrayList<int[]> getSnakePlayer() {
-        return player;
     }
 
     public int[] muovi() {
@@ -32,6 +29,7 @@ public class SnakePlayer {
 
         //La testa avanza di 1 rispetto alla sua direzione
         int[] testa = player.get(0);
+
         switch (direzioneTesta) {
             case 0:    //su, stessa x, y-1
                 testa[1]--;
@@ -57,13 +55,15 @@ public class SnakePlayer {
     }
 
     /**
-     * Ritorna vero se la prossima mossa snake colpisce una parte del suo corpo
+     * Ritorna vero se nella prossima mossa snake colpisce una parte del suo
+     * corpo
      *
      * @return true se colpisce se stesso
      */
-    public boolean checkMove() {
+    public boolean checkCollision() {
         //La testa avanza di 1 rispetto alla sua direzione
         int[] newCoords = player.get(0).clone();
+
         switch (direzioneTesta) {
             case 0:    //su, stessa x, y-1
                 newCoords[1]--;
@@ -82,8 +82,10 @@ public class SnakePlayer {
                 break;
         }
 
-        for (int thisBlocco = 1; thisBlocco < player.size(); thisBlocco++) {
-            //Controlla che la prossima posizione non sia uguale a quella di un blocco del serpente
+        //Non controlla l'ultimo blocco perchè, essendo la coda,
+        //nel frame dopo anche lei si sarà spostata via dalla posizione attuale
+        for (int thisBlocco = 1; thisBlocco < player.size() - 1; thisBlocco++) {
+            //Controlla che la prossima posizione della testa non sia uguale a quella di un blocco del serpente
             int thisX = player.get(thisBlocco)[0], thisY = player.get(thisBlocco)[1];
             if ((newCoords[0] == thisX) && (newCoords[1] == thisY)) {
                 return true;
@@ -112,5 +114,9 @@ public class SnakePlayer {
 
     public void setDirezioneTesta(int direzioneTesta) {
         this.direzioneTesta = direzioneTesta;
+    }
+
+    public ArrayList<int[]> getSnakePlayer() {
+        return player;
     }
 }

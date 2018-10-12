@@ -56,19 +56,20 @@ public class PlayMapPanel extends JPanel {
         }
 
         if (player != null) {
-            int thisX, thisY;
-
             //Disegno del serpente
             for (int thisBlock = 0; thisBlock < player.getSnakePlayer().size(); thisBlock++) {
-                thisX = player.getSnakePlayer().get(thisBlock)[0];
-                thisY = player.getSnakePlayer().get(thisBlock)[1];
+                int thisX = player.getSnakePlayer().get(thisBlock)[0];
+                int thisY = player.getSnakePlayer().get(thisBlock)[1];
                 cord = getPixelCoords(thisX, thisY);
 
+                Color blockColor;
                 if (thisBlock == 0) {
-                    drawBlock(g, cord[0], cord[1], headColor);
+                    blockColor = headColor;
                 } else {
-                    drawBlock(g, cord[0], cord[1], bodyColor);
+                    blockColor = bodyColor;
                 }
+                
+                drawBlock(g, cord[0], cord[1], blockColor);
             }
 
             //Disegno della mela
