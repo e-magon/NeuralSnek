@@ -14,7 +14,9 @@ public class PlayMapPanel extends JPanel {
 
     private final int blockSize;
     private final int actualBlockSize;
+    private final int eyesSize;
     private final Color headColor;
+    private final Color eyesColor;
     private final Color bodyColor;
     private final Color appleColor;
     private final Color gridColor;
@@ -25,12 +27,14 @@ public class PlayMapPanel extends JPanel {
     public PlayMapPanel() {
         blockSize = 20;
         actualBlockSize = blockSize - 1;
+        eyesSize = 4;
 
         headColor = Color.GREEN;
         bodyColor = new Color(0, 180, 0); //Verde scuro
         appleColor = Color.RED;
         gridColor = Color.BLACK;
         bgColor = Color.GRAY;
+        eyesColor = Color.BLACK;
     }
 
     @Override
@@ -62,14 +66,12 @@ public class PlayMapPanel extends JPanel {
                 int thisY = player.getSnakePlayer().get(thisBlock)[1];
                 cord = getPixelCoords(thisX, thisY);
 
-                Color blockColor;
                 if (thisBlock == 0) {
-                    blockColor = headColor;
+                    drawBlock(g, cord[0], cord[1], headColor, true);
                 } else {
-                    blockColor = bodyColor;
+                    drawBlock(g, cord[0], cord[1], bodyColor);
                 }
-                
-                drawBlock(g, cord[0], cord[1], blockColor);
+
             }
 
             //Disegno della mela
@@ -88,6 +90,19 @@ public class PlayMapPanel extends JPanel {
     public void drawBlock(Graphics g, int x, int y, Color color) {
         g.setColor(color);
         g.fillRect(x - actualBlockSize / 2, y - actualBlockSize / 2, actualBlockSize, actualBlockSize);
+    }
+
+    public void drawBlock(Graphics g, int x, int y, Color color, boolean isTesta) {
+        drawBlock(g, x, y, color);
+
+        g.setColor(eyesColor);
+        if (player.getDirezioneTesta() % 2 == 0) {
+            g.fillRect(x - 7, y - eyesSize / 2, eyesSize, eyesSize);
+            g.fillRect(x + 4, y - eyesSize / 2, eyesSize, eyesSize);
+        } else {
+            g.fillRect(x - eyesSize / 2, y - 7, eyesSize, eyesSize);
+            g.fillRect(x - eyesSize / 2, y + 4, eyesSize, eyesSize);
+        }
     }
 
     /**
