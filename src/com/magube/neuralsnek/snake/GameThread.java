@@ -57,8 +57,8 @@ public class GameThread extends Thread {
                 labelPerso.setVisible(true);
                 perso = true;
             } else {
-                int appleX = apple.getCoord()[0];
-                int appleY = apple.getCoord()[1];
+                int appleX = apple.getCoords()[0];
+                int appleY = apple.getCoords()[1];
 
                 if (nextPos[0] == appleX && nextPos[1] == appleY) {
                     System.out.println("Mela mangiata");

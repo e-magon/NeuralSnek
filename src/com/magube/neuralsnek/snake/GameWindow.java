@@ -28,7 +28,7 @@ public class GameWindow extends javax.swing.JFrame {
         paused = true;
 
         player = new SnakePlayer();
-        apple = new Apple();
+        apple = new Apple(player.getPlayerCoords());
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso);
         
         canvas.repaint();
