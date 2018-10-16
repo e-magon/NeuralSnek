@@ -1,5 +1,6 @@
 package com.magube.neuralsnek.snake;
 
+import com.magube.neuralsnek.snake.brain.SnekNN;
 import javax.swing.UIManager;
 
 public class LauncherWindow extends javax.swing.JFrame {
@@ -35,6 +36,11 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         butNewNet.setText("Nuovo addestramento");
         butNewNet.setFocusPainted(false);
+        butNewNet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butNewNetActionPerformed(evt);
+            }
+        });
 
         butLoad.setText("Carica addestramento");
         butLoad.setFocusPainted(false);
@@ -67,12 +73,18 @@ public class LauncherWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNewGameActionPerformed
-        GameWindow game = new GameWindow();
+        GameWindow game = new GameWindow(true);
         game.setLocationRelativeTo(null);
         game.setTitle("Snake - Gioca");
         game.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_butNewGameActionPerformed
+
+    private void butNewNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNewNetActionPerformed
+        SnekNN nSnek = new SnekNN();
+        nSnek.start();
+        this.dispose();
+    }//GEN-LAST:event_butNewNetActionPerformed
 
     public static void main(String args[]) {
         try {

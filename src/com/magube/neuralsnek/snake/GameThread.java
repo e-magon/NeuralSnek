@@ -10,19 +10,22 @@ public class GameThread extends Thread {
     private final Apple apple;
 
     private boolean moved;
+    private boolean ready;
     private final int TARGET_FPS;
+    private final boolean playable;
     private int punteggio;
 
     private final JLabel labelPerso;
     private final JLabel labelPunti;
 
     public GameThread(PlayMapPanel canvas, SnakePlayer player, Apple apple,
-            JLabel labelPunti, JLabel labelPerso) {
+            JLabel labelPunti, JLabel labelPerso, boolean playable) {
         this.canvas = canvas;
         this.player = player;
         this.apple = apple;
         this.labelPerso = labelPerso;
         this.labelPunti = labelPunti;
+        this.playable = playable;
 
         punteggio = 0;
 
@@ -31,11 +34,13 @@ public class GameThread extends Thread {
 
         moved = false;
         TARGET_FPS = 7;
+
+        ready = playable;
     }
 
     @Override
     public void run() {
-        Utils.sleep(150); //Aspetta l'inizializzazione del player, altrimenti perde subito
+        Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti perde subito
 
         int maxWidth = canvas.getTelaW() / canvas.getBlockSize();
         int maxHeight = canvas.getTelaH() / canvas.getBlockSize();
@@ -47,6 +52,11 @@ public class GameThread extends Thread {
         boolean perso = false;
 
         while (!perso) {
+            if (!ready) {
+                Utils.sleep(50);
+                continue;
+            }
+
             boolean snakeHit = player.checkCollision();
             int[] nextPos = player.muovi();
 
@@ -54,6 +64,7 @@ public class GameThread extends Thread {
             boolean isYok = (nextPos[1] > 0) && (nextPos[1] <= maxHeight);
 
             if (!(isXok && isYok) || snakeHit) {
+                System.err.println("Ho perso perchè sono andato a x, y: " + nextPos[0] + " " + nextPos[1]);
                 labelPerso.setVisible(true);
                 perso = true;
             } else {
@@ -72,7 +83,11 @@ public class GameThread extends Thread {
                 moved = false;
             }
 
-            Utils.sleep((int) ((1f / TARGET_FPS) * 1000));
+            if (playable) {
+                Utils.sleep((int) ((1f / TARGET_FPS) * 1000));
+            } else {
+                ready = false;
+            }
         }
     }
 
@@ -85,4 +100,13 @@ public class GameThread extends Thread {
             }
         }
     }
+
+    public boolean isPronto() {
+        return ready;
+    }
+
+    public void setPronto(boolean pronto) {
+        this.ready = pronto;
+    }
+
 }
