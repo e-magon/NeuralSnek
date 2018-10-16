@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class NNManager {
-    //Manager che ha un input e un output aspettato predefinito
     private boolean logging;
     
     private int numCreature;
@@ -13,7 +12,6 @@ public class NNManager {
     private int hidLayNum;
     private int hidNeuNum;
     private int outputNeu;
-    private double[] target;
     private double[] input;
     private double soglie;
     private Network[] creature;
@@ -119,23 +117,6 @@ public class NNManager {
         }
         
         return risultato;
-    }
-    
-    public int valuta(double[] outputRete) {
-        //Indica il fitness delle reti
-        int punti = 0;
-        
-        //Controllo per vedere se il target e l'input sono lunghi uguali
-        if (outputRete.length == target.length) {
-            for (int ris=0; ris<outputRete.length; ris++) {
-                //Per ogni risultato:
-                if (outputRete[ris] == target[ris])
-                    punti++;
-            }
-            return punti;
-        }
-        else
-            return -99;
     }
   
     public int[] ordina(int[] punteggiOttenuti) {
@@ -276,14 +257,6 @@ public class NNManager {
     public void setInput(double[] input) {
         this.input = input;
         
-    }
-    
-    public double[] getTarget() {
-        return target;
-    }
-
-    public void setTarget(double[] target) {
-        this.target = target;
     }
 
     public void setNumReti(int numReti) {

@@ -10,7 +10,7 @@ public class Network {
     
     private boolean logging;
     
-    private Neuron[][] network; //Matrice di neuroni
+    private final Neuron[][] network; //Matrice di neuroni
 
     //Costruttore con parametri
     public Network(int inputNeu, int hidLay, int hidNeu, int outputNeu, boolean logging) {
@@ -29,7 +29,7 @@ public class Network {
         //Crea un neurone di input fino a riempire il primo layer
         for (int k=0; k<inputNeuronsNumber; k++) {
             //Usa il costruttore per quelli di input
-            network[0][k] = new Neuron(logging, true);
+            network[0][k] = new Neuron(logging, true, false);
             //Imposta il nome: Layer0_NeuronK
             network[0][k].setName("L0_N" + k);
         }
@@ -40,7 +40,7 @@ public class Network {
             network[k] = new Neuron[hiddenNeuronsNumber];
             //Crea un neurone in ogni cella del livello
             for (int c=0; c<hiddenNeuronsNumber; c++) { //c è il numero del neurone di quel livello
-                network[k][c] = new Neuron(logging);
+                network[k][c] = new Neuron(logging, false, false);
                 //LayerK_NeuronC
                 network[k][c].setName("L" + k + "_N" + c);
             }
@@ -51,7 +51,7 @@ public class Network {
         
         //Crea i neuroni di output
         for (int c=0; c<outputNeuronsNumber; c++) { //c è il numero del neurone di quel livello
-            network[hiddenLayersNumber+1][c] = new Neuron(logging);
+            network[hiddenLayersNumber+1][c] = new Neuron(logging, false, true);
             //LayerK_NeuronC
             network[hiddenLayersNumber+1][c]
                     .setName("L" + (hiddenLayersNumber+1) + "_N" + c);

@@ -6,52 +6,52 @@ public class SnakePlayer {
 
     //Matrice che rappresenta le coordinate del serpente.
     //Ogni riga della matrice è un blocco del serpente, e le due colonne le coordinate x ed y
-    private final ArrayList<int[]> player;
+    private final ArrayList<int[]> playerCoords;
 
     //0: su    1: destra    2: giù    3: sinistra
     private int direzioneTesta;     //Usato per la direzione in cui muovere il corpo
 
     public SnakePlayer() {
-        player = new ArrayList<>(0);
+        playerCoords = new ArrayList<>(0);
 
         setHead(18, 12);
         setDirezioneTesta(0);
-        player.add(new int[]{18, 13});
-        player.add(new int[]{18, 14});
+        playerCoords.add(new int[]{18, 13});
+        playerCoords.add(new int[]{18, 14});
     }
 
     public int[] muovi() {
-        for (int blocco = player.size() - 1; blocco > 0; blocco--) {
+        for (int blocco = playerCoords.size() - 1; blocco > 0; blocco--) {
             //Per ogni blocco a partire dall'ultimo, imposta le sue coord a quelle del blocco prima
-            player.get(blocco)[0] = player.get(blocco - 1)[0];
-            player.get(blocco)[1] = player.get(blocco - 1)[1];
+            playerCoords.get(blocco)[0] = playerCoords.get(blocco - 1)[0];
+            playerCoords.get(blocco)[1] = playerCoords.get(blocco - 1)[1];
         }
 
         //La testa avanza di 1 rispetto alla sua direzione
-        int[] testa = player.get(0);
+        int[] testa = playerCoords.get(0);
 
         switch (direzioneTesta) {
             case 0:    //su, stessa x, y-1
                 testa[1]--;
-                player.set(0, testa);
+                playerCoords.set(0, testa);
                 break;
 
             case 1:    //destra, x+1, stessa y
                 testa[0]++;
-                player.set(0, testa);
+                playerCoords.set(0, testa);
                 break;
 
             case 2:    //giù, stessa x, y+1
                 testa[1]++;
-                player.set(0, testa);
+                playerCoords.set(0, testa);
                 break;
 
             case 3:    //sinistra, x-1, stessa y
                 testa[0]--;
-                player.set(0, testa);
+                playerCoords.set(0, testa);
                 break;
         }
-        return player.get(0);   //Ritorna la posizione nuova della testa
+        return playerCoords.get(0);   //Ritorna la posizione nuova della testa
     }
 
     /**
@@ -62,7 +62,7 @@ public class SnakePlayer {
      */
     public boolean checkCollision() {
         //La testa avanza di 1 rispetto alla sua direzione
-        int[] newCoords = player.get(0).clone();
+        int[] newCoords = playerCoords.get(0).clone();
 
         switch (direzioneTesta) {
             case 0:    //su, stessa x, y-1
@@ -84,9 +84,9 @@ public class SnakePlayer {
 
         //Non controlla l'ultimo blocco perchè, essendo la coda,
         //nel frame dopo anche lei si sarà spostata via dalla posizione attuale
-        for (int thisBlocco = 1; thisBlocco < player.size() - 1; thisBlocco++) {
+        for (int thisBlocco = 1; thisBlocco < playerCoords.size() - 1; thisBlocco++) {
             //Controlla che la prossima posizione della testa non sia uguale a quella di un blocco del serpente
-            int thisX = player.get(thisBlocco)[0], thisY = player.get(thisBlocco)[1];
+            int thisX = playerCoords.get(thisBlocco)[0], thisY = playerCoords.get(thisBlocco)[1];
             if ((newCoords[0] == thisX) && (newCoords[1] == thisY)) {
                 return true;
             }
@@ -96,16 +96,16 @@ public class SnakePlayer {
     }
 
     public void setHead(int x, int y) {
-        if (player.size() == 0) {
-            player.add(new int[]{x, y});
+        if (playerCoords.size() == 0) {
+            playerCoords.add(new int[]{x, y});
         } else {
             System.err.println("Errore: testa già presente");
         }
     }
 
     public void addBlock() {
-        int[] ultimoPezzo = player.get(player.size() - 1);
-        player.add(new int[]{ultimoPezzo[0], ultimoPezzo[1]});
+        int[] ultimoPezzo = playerCoords.get(playerCoords.size() - 1);
+        playerCoords.add(new int[]{ultimoPezzo[0], ultimoPezzo[1]});
     }
 
     public int getDirezioneTesta() {
@@ -116,7 +116,7 @@ public class SnakePlayer {
         this.direzioneTesta = direzioneTesta;
     }
 
-    public ArrayList<int[]> getSnakePlayer() {
-        return player;
+    public ArrayList<int[]> getPlayerCoords() {
+        return playerCoords;
     }
 }
