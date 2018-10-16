@@ -116,7 +116,7 @@ public class SnakePlayer {
         this.direzioneTesta = direzioneTesta;
     }
 
-    public ArrayList<int[]> getPlayerCoords() {
+    public ArrayList<int[]> getCoords() {
         return playerCoords;
     }
 }

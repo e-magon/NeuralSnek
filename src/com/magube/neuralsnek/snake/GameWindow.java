@@ -1,6 +1,5 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.utils.Utils;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
@@ -13,7 +12,7 @@ public class GameWindow extends javax.swing.JFrame {
     private GameThread gameThread;
 
     private boolean paused;
-    private boolean playable;
+    private final boolean playable;
 
     public GameWindow(boolean playable) {
         initComponents();
@@ -29,16 +28,14 @@ public class GameWindow extends javax.swing.JFrame {
 
         if (playable) {
             labelComandi.setText("Premi W per iniziare");
+            paused = true;
         } else {
             labelComandi.setVisible(false);
-        }
-
-        if (playable) {
-            paused = true;
+            butRiavvia.setVisible(false);
         }
 
         player = new SnakePlayer();
-        apple = new Apple(player.getPlayerCoords());
+        apple = new Apple(player.getCoords());
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso, playable);
         canvas.repaint();
     }
@@ -135,38 +132,41 @@ public class GameWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (playable) {
-            //Se il gioco è in pausa, con il tasto W inizia
-            if (paused && evt.getKeyCode() == KeyEvent.VK_W) {
-                gameThread.start();
-                labelComandi.setText("W, A, S, D per muoversi");
-                paused = false;
-            } //Altrimenti controlla il tasto
-            else {
-                switch (evt.getKeyCode()) {
-                    case KeyEvent.VK_W:
-                        //Va in alto
-                        gameThread.move(0);
-                        break;
+        try {
+            if (playable) {
+                //Se il gioco è in pausa, con il tasto W inizia
+                if (paused && evt.getKeyCode() == KeyEvent.VK_W) {
+                    gameThread.start();
+                    labelComandi.setText("W, A, S, D per muoversi");
+                    paused = false;
+                } //Altrimenti controlla il tasto
+                else {
+                    switch (evt.getKeyCode()) {
+                        case KeyEvent.VK_W:
+                            //Va in alto
+                            gameThread.move(0);
+                            break;
 
-                    case KeyEvent.VK_D:
-                        //Va a destra
-                        gameThread.move(1);
-                        break;
+                        case KeyEvent.VK_D:
+                            //Va a destra
+                            gameThread.move(1);
+                            break;
 
-                    case KeyEvent.VK_S:
-                        //Va in basso
-                        gameThread.move(2);
-                        break;
+                        case KeyEvent.VK_S:
+                            //Va in basso
+                            gameThread.move(2);
+                            break;
 
-                    case KeyEvent.VK_A:
-                        //Va a sinistra
-                        gameThread.move(3);
-                        break;
+                        case KeyEvent.VK_A:
+                            //Va a sinistra
+                            gameThread.move(3);
+                            break;
+                    }
                 }
+            } else {
+                gameThread.start();
             }
-        } else {
-            gameThread.start();
+        } catch (Exception ex) {
         }
     }//GEN-LAST:event_formKeyPressed
 
@@ -177,6 +177,18 @@ public class GameWindow extends javax.swing.JFrame {
 
     public GameThread getGameThread() {
         return gameThread;
+    }
+
+    public SnakePlayer getPlayer() {
+        return player;
+    }
+
+    public Apple getApple() {
+        return apple;
+    }
+
+    public PlayMapPanel getCanvas() {
+        return canvas;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

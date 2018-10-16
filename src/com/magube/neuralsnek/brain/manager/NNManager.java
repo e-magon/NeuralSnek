@@ -1,6 +1,7 @@
 package com.magube.neuralsnek.brain.manager;
 
 import com.magube.neuralsnek.brain.Network;
+import com.magube.neuralsnek.snake.brain.SnekNN;
 import java.util.ArrayList;
 import java.util.Random;
 

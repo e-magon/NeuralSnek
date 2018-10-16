@@ -42,8 +42,8 @@ public class GameThread extends Thread {
     public void run() {
         Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti perde subito
 
-        int maxWidth = canvas.getTelaW() / canvas.getBlockSize();
-        int maxHeight = canvas.getTelaH() / canvas.getBlockSize();
+        int maxWidth = canvas.getWidth()/ canvas.getBlockSize();
+        int maxHeight = canvas.getHeight()/ canvas.getBlockSize();
 
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);

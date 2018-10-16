@@ -38,10 +38,61 @@ public class SnekNN extends Thread {
         gameWindow.getGameThread().start();
 
         while (true) {
-            
-            
-            Utils.sleep(500);
             gameWindow.getGameThread().setPronto(true);
+            Utils.sleep(1000);
+
+            int playerX = gameWindow.getPlayer().getCoords().get(0)[0];
+            int playerY = gameWindow.getPlayer().getCoords().get(0)[1];
+
+            int melaX = gameWindow.getApple().getCoords()[0];
+            int melaY = gameWindow.getApple().getCoords()[1];
+
+            int appleDistX = melaX - playerX;
+            int appleDistY = melaY - playerY;
+
+            double valoreMelaX = map(appleDistX, false);
+            double valoreMelaY = map(appleDistY, true);
+            
+            System.out.println(valoreMelaY);
+
+            double[] input = new double[8];
+            if (valoreMelaY < 0) {
+                input[0] = -appleDistY;
+                input[2] = 0d;
+            } else {
+                input[0] = 0d;
+                input[2] = appleDistY;
+            }
+            
+            if (valoreMelaX < 0) {
+                input[3] = -appleDistX;
+                input[1] = 0d;
+            } else {
+                input[3] = 0d;
+                input[1] = appleDistX;
+            }
+
+            nnManager.setInput(input);
+            //for (double k : input)
+                //System.out.println(k + " ");
+            //System.out.println("\n\n\n");
         }
+    }
+
+    /**
+     * Prende il valore di una distanza e ritorna un valore tra 0 e 1 in base a
+     * quanto è vicino. Come range usa la larghezza ed altezza del canvas
+     *
+     * @return 1 se è la cella successiva, 0.1 se è molto lontano, ecc
+     */
+    public double map(int distanza, boolean verticale) {
+        double valore;
+        if (verticale) {
+            valore = (double) distanza / (gameWindow.getCanvas().getHeight() / gameWindow.getCanvas().getBlockSize());
+        } else {
+            valore = (double) distanza / (gameWindow.getCanvas().getWidth() / gameWindow.getCanvas().getBlockSize());
+        }
+
+        return 1 - valore;
     }
 }

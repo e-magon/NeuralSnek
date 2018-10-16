@@ -61,9 +61,9 @@ public class PlayMapPanel extends JPanel {
 
         if (player != null) {
             //Disegno del serpente
-            for (int thisBlock = 0; thisBlock < player.getPlayerCoords().size(); thisBlock++) {
-                int thisX = player.getPlayerCoords().get(thisBlock)[0];
-                int thisY = player.getPlayerCoords().get(thisBlock)[1];
+            for (int thisBlock = 0; thisBlock < player.getCoords().size(); thisBlock++) {
+                int thisX = player.getCoords().get(thisBlock)[0];
+                int thisY = player.getCoords().get(thisBlock)[1];
                 cord = getPixelCoords(thisX, thisY);
 
                 if (thisBlock == 0) {
@@ -125,14 +125,6 @@ public class PlayMapPanel extends JPanel {
 
     public void setApple(Apple apple) {
         this.apple = apple;
-    }
-
-    public int getTelaW() {
-        return telaW;
-    }
-
-    public int getTelaH() {
-        return telaH;
     }
 
     public int getBlockSize() {
