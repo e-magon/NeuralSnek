@@ -1,7 +1,6 @@
 package com.magube.neuralsnek.brain.manager;
 
 import com.magube.neuralsnek.brain.Network;
-import com.magube.neuralsnek.snake.brain.SnekNN;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -61,7 +60,7 @@ public class NNManager {
     }
     
     public void generaPesi() {
-        double min = -1;
+        double min = 0;
         double max = 1;
         double[] randomPesi = null;
         

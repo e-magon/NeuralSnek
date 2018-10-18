@@ -79,7 +79,7 @@ public class Neuron {
                 }
             } else {
                 if (logging) {
-                    System.out.printf("%s: Sono di output, quindi risulto il mio valore: " + result, this.getNome());
+                    System.out.printf("%s: Sono di output, quindi risulto il mio valore: %.3f \n", this.getNome(), result);
                 }
 
                 return result;

@@ -24,7 +24,7 @@ public class SnekNN extends Thread {
         outputNeu = 4;
         soglie = 0.5;
 
-        nnManager = new NNManager(true, numCreature, inputNeu, hidLayNum, hidNeuNum, outputNeu, soglie);
+        nnManager = new NNManager(false, numCreature, inputNeu, hidLayNum, hidNeuNum, outputNeu, soglie);
 
         gameWindow = new GameWindow(false);
         gameWindow.setLocationRelativeTo(null);
@@ -40,7 +40,7 @@ public class SnekNN extends Thread {
 
         while (true) {
             gameWindow.getGameThread().setPronto(true);
-            Utils.sleep(2000);
+            Utils.sleep(500);
 
             int playerX = gameWindow.getPlayer().getCoords().get(0)[0];
             int playerY = gameWindow.getPlayer().getCoords().get(0)[1];
@@ -97,7 +97,10 @@ public class SnekNN extends Thread {
                     }
                 }
             }
-            System.out.println("Il valore maggiore è " + valoreMaggiore);
+            
+            System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione " + direzMaggiore);
+            
+            gameWindow.getPlayer().setDirezioneTesta(direzMaggiore);
         }
     }
 
