@@ -74,7 +74,7 @@ public class NNManager {
                     if (livello == 0) {
                         //Per ogni neurone di input:
                         randomPesi = new double[1];
-                        randomPesi[1] = randomDouble(min, max);
+                        randomPesi[0] = randomDouble(min, max);
                     }
                     
                     if (livello == 1) {

@@ -53,7 +53,7 @@ public class GameThread extends Thread {
 
         while (!perso) {
             if (!ready) {
-                Utils.sleep(50);
+                Utils.sleep(1);
                 continue;
             }
 
