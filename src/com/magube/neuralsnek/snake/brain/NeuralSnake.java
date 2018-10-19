@@ -3,6 +3,7 @@ package com.magube.neuralsnek.snake.brain;
 import com.magube.neuralsnek.brain.components.NNetwork;
 import com.magube.neuralsnek.brain.manager.NNManager;
 import com.magube.neuralsnek.snake.GameWindow;
+import com.magube.neuralsnek.snake.SnakePlayer;
 import com.magube.neuralsnek.snake.utils.Utils;
 import java.util.Random;
 
@@ -24,17 +25,20 @@ public class NeuralSnake extends Thread {
     private double soglie;
 
     private NNetwork cervello;
+    private SnakePlayer corpo;
 
     private boolean logging;
 
-    public NeuralSnake() {
-        inputNeu = 8;
-        hidLayNum = 2;
-        hidNeuNum = 8;
-        outputNeu = 4;
-        soglie = 0.5;
+    public NeuralSnake(int inputNeu, int hidLayNum, int hidNeuNum, int outputNeu, double soglie, boolean logging) {
+        this.inputNeu = inputNeu;
+        this.hidLayNum = hidLayNum;
+        this.hidNeuNum = hidNeuNum;
+        this.outputNeu = outputNeu;
+        this.soglie = soglie;
 
-        logging = true;
+        this.logging = logging;
+        
+        corpo = new SnakePlayer();
     }
 
     public void creaRete() {
@@ -46,6 +50,9 @@ public class NeuralSnake extends Thread {
 
         //Collega le reti
         cervello.collega();
+        
+        //genera i pesi
+        generaPesi(cervello);
 
         //Info
         System.out.println(cervello.getInfo());
@@ -219,5 +226,13 @@ public class NeuralSnake extends Thread {
 
     public void setCervello(NNetwork cervello) {
         this.cervello = cervello;
+    }
+
+    public SnakePlayer getCorpo() {
+        return corpo;
+    }
+
+    public void setCorpo(SnakePlayer corpo) {
+        this.corpo = corpo;
     }
 }

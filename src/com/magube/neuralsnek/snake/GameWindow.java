@@ -2,6 +2,7 @@ package com.magube.neuralsnek.snake;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import javax.swing.JLabel;
 
 //Il bottone di riavvia non deve essere focusable, altrimenti non vengono
 //ascoltati i tasti di movimento
@@ -189,6 +190,14 @@ public class GameWindow extends javax.swing.JFrame {
 
     public PlayMapPanel getCanvas() {
         return canvas;
+    }
+
+    public JLabel getLabelPerso() {
+        return labelPerso;
+    }
+
+    public JLabel getLabelPunti() {
+        return labelPunti;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

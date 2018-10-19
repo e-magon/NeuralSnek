@@ -31,7 +31,7 @@ public class GameThread extends Thread {
 
         punteggio = 0;
 
-        canvas.setApple(apple);
+        //canvas.setApple(apple);
         canvas.setPlayer(player);
 
         moved = false;
