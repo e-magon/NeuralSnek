@@ -1,6 +1,6 @@
 package com.magube.neuralsnek.brain.manager;
 
-import com.magube.neuralsnek.brain.Network;
+import com.magube.neuralsnek.brain.components.NNetwork;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,7 +14,7 @@ public class NNManager {
     private int outputNeu;
     private double[] input;
     private double soglie;
-    private Network[] creature;
+    private NNetwork[] creature;
 
     public NNManager(boolean logging, int numCreature, int inputNeu, int hidLayNum,
             int hidNeuNum, int outputNeu, double soglie) {
@@ -31,9 +31,9 @@ public class NNManager {
         
     public void creaReti() {
         //Crea tante creature quante sono state dette
-        creature = new Network[numCreature];
+        creature = new NNetwork[numCreature];
         for (int rete=0; rete<creature.length; rete++)
-            creature[rete] = new Network(inputNeu, hidLayNum, hidNeuNum, outputNeu, logging);
+            creature[rete] = new NNetwork(inputNeu, hidLayNum, hidNeuNum, outputNeu, logging);
         
         //Imposta le soglie
         impostaSoglie(creature);
@@ -49,7 +49,7 @@ public class NNManager {
             creature[rete].collega();
     }
 
-    private void impostaSoglie(Network[] creature) {
+    private void impostaSoglie(NNetwork[] creature) {
         for (int rete=0; rete<creature.length; rete++)
             //Per ogni rete:
             for (int livello=1; livello<creature[rete].getTotalLayersNumber(); livello++)
@@ -242,7 +242,7 @@ public class NNManager {
     public void setLogging(boolean logging) {
         this.logging = logging;
         //Lo modifica per ogni rete
-        for (Network rete : creature)
+        for (NNetwork rete : creature)
             rete.setLogging(logging);
     }
 
@@ -299,11 +299,11 @@ public class NNManager {
         return soglie;
     }
 
-    public Network[] getReti() {
+    public NNetwork[] getReti() {
         return creature;
     }
 
-    public void setReti(Network[] reti) {
+    public void setReti(NNetwork[] reti) {
         this.creature = reti;
     }
 

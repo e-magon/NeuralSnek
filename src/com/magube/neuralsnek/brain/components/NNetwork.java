@@ -1,8 +1,8 @@
-package com.magube.neuralsnek.brain;
+package com.magube.neuralsnek.brain.components;
 
 import java.util.ArrayList;
 
-public class Network {
+public class NNetwork {
     private final int inputNeuronsNumber; //Numero di neuroni input
     private final int hiddenLayersNumber; //Numero di livelli nascosti
     private final int hiddenNeuronsNumber; //Numero di neuroni per ogni livello nascosto
@@ -13,7 +13,7 @@ public class Network {
     private final Neuron[][] network; //Matrice di neuroni
 
     //Costruttore con parametri
-    public Network(int inputNeu, int hidLay, int hidNeu, int outputNeu, boolean logging) {
+    public NNetwork(int inputNeu, int hidLay, int hidNeu, int outputNeu, boolean logging) {
         inputNeuronsNumber=inputNeu;
         hiddenLayersNumber=hidLay;
         hiddenNeuronsNumber=hidNeu;

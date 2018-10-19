@@ -27,4 +27,15 @@ public class Utils {
 
         return new int[]{x, y};
     }
+    
+    /**
+     * Ritorna un double casuale tra il min e max
+     * @param min
+     * @param max
+     * @return double generato a caso
+     */
+    public static double randomDouble(double min, double max) {
+        double random = new Random().nextDouble();
+        return min + (random * (max - min));
+    }
 }

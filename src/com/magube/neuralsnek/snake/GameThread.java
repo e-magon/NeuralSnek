@@ -15,6 +15,8 @@ public class GameThread extends Thread {
     private final boolean playable;
     private int punteggio;
 
+    private boolean perso;
+
     private final JLabel labelPerso;
     private final JLabel labelPunti;
 
@@ -36,20 +38,19 @@ public class GameThread extends Thread {
         TARGET_FPS = 7;
 
         ready = playable;
+        perso = false;
     }
 
     @Override
     public void run() {
         Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti perde subito
 
-        int maxWidth = canvas.getWidth()/ canvas.getBlockSize();
-        int maxHeight = canvas.getHeight()/ canvas.getBlockSize();
+        int maxWidth = canvas.getWidth() / canvas.getBlockSize();
+        int maxHeight = canvas.getHeight() / canvas.getBlockSize();
 
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);
         apple.newCoord();
-
-        boolean perso = false;
 
         while (!perso) {
             if (!ready) {
@@ -109,4 +110,7 @@ public class GameThread extends Thread {
         this.ready = pronto;
     }
 
+    public boolean isPerso() {
+        return perso;
+    }
 }

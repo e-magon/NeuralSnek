@@ -1,6 +1,6 @@
 package com.magube.neuralsnek.snake;
 
-import com.magube.neuralsnek.snake.brain.SnekNN;
+import com.magube.neuralsnek.snake.brain.NeuralSnake;
 import javax.swing.UIManager;
 
 public class LauncherWindow extends javax.swing.JFrame {
@@ -81,7 +81,7 @@ public class LauncherWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_butNewGameActionPerformed
 
     private void butNewNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNewNetActionPerformed
-        SnekNN nSnek = new SnekNN();
+        NeuralSnake nSnek = new NeuralSnake();
         nSnek.start();
         this.dispose();
     }//GEN-LAST:event_butNewNetActionPerformed
@@ -100,7 +100,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                 finestra.setLocationRelativeTo(null);
                 finestra.setVisible(true);
 
-                SnekNN nSnek = new SnekNN();
+                NeuralSnake nSnek = new NeuralSnake();
                 nSnek.start();
             }
         });
