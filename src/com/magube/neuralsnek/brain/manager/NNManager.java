@@ -1,6 +1,6 @@
 package com.magube.neuralsnek.brain.manager;
 
-import com.magube.neuralsnek.brain.components.NNetwork;
+import com.magube.neuralsnek.braincomponents.NNetwork;
 import java.util.ArrayList;
 import java.util.Random;
 

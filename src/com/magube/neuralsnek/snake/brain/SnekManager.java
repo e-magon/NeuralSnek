@@ -10,13 +10,17 @@ public class SnekManager extends Thread {
 
     private final int numCreature;
     private final NeuralSnake[] creature;
+    private final int mosseTotali;
+    private final double soglie;
 
     private GameWindow gameWindow;
 
     private GameThread gameThreadPointer;
 
     public SnekManager() {
-        numCreature = 1;
+        numCreature = 100;
+        mosseTotali = 30;
+        soglie = 0.2;
         creature = new NeuralSnake[numCreature];
     }
 
@@ -24,69 +28,82 @@ public class SnekManager extends Thread {
     public void run() {
         int numClassifica = 0;
         int[] classifica = new int[numCreature];
+        GameWindow oldWindow = null;    //Usate per chiudere la finestra precedente dopo aver aperta quella nuova
 
         for (NeuralSnake thisCreatura : creature) {
-            thisCreatura = new NeuralSnake(8, 2, 8, 4, 0.5, false);
+            Utils.sleep(150);
+            thisCreatura = new NeuralSnake(4, 2, 8, 4, soglie, true);
             thisCreatura.creaRete();
-            thisCreatura.getCorpo();
 
             gameWindow = new GameWindow(false);
             gameWindow.setLocationRelativeTo(null);
-            gameWindow.setTitle("Snake - Addestra");
+            gameWindow.setTitle("NeuralSnek - Addestra - creatura n. " + numClassifica);
             gameWindow.setVisible(true);
+            if (oldWindow != null) {
+                oldWindow.dispose();
+            }
             gameThreadPointer = gameWindow.getGameThread();
 
             gameThreadPointer.start();
-            Utils.sleep(300);
-            gameThreadPointer.setPronto(true);
-            Utils.sleep(300);
-            gameThreadPointer.setPronto(true);
-            Utils.sleep(300);
-            gameThreadPointer.setPronto(true);
 
             //Ciclo di addestramento
-            int punteggio = 0;
-            int mosseRimanenti = 100;
+            int mosseRimanenti = mosseTotali;
 
+            Utils.sleep(150);
             while (true) {
+                if (gameWindow.getApple().getCoords() == null || gameWindow.getPlayer().getCoords().get(0) == null) {
+                    Utils.sleep(70);
+                    continue;
+                }
+                Utils.sleep(5000);
                 gameThreadPointer.setPronto(true);
+
                 mosseRimanenti--;
-                Utils.sleep(1000);
+                
                 if (gameThreadPointer.isPerso() || mosseRimanenti <= 0) {
+                    gameThreadPointer.setPerso(true);
                     break;
                 }
+
                 int playerX = gameWindow.getPlayer().getCoords().get(0)[0];
                 int playerY = gameWindow.getPlayer().getCoords().get(0)[1];
 
                 int melaX = gameWindow.getApple().getCoords()[0];
                 int melaY = gameWindow.getApple().getCoords()[1];
 
-                double valoreMelaX = Utils.map(melaX - playerX, false, gameWindow);
-                double valoreMelaY = Utils.map(melaY - playerY, true, gameWindow);
+                double valoreMelaX = Utils.map(melaX, playerX, gameWindow.getWidth(), gameWindow.getCanvas().getBlockSize());
+                double valoreMelaY = Utils.map(melaY, playerY, gameWindow.getHeight(), gameWindow.getCanvas().getBlockSize());
 
+                //valoreMelaX *= 10;
+                //valoreMelaY *= 10;
                 double[] input = new double[8];
-                if (valoreMelaY < 0) {
-                    input[0] = -valoreMelaY;
+                if (playerY > melaY) {
+                    input[0] = valoreMelaY;
                     input[2] = 0d;
                 } else {
                     input[0] = 0d;
                     input[2] = valoreMelaY;
                 }
 
-                if (valoreMelaX < 0) {
-                    input[3] = -valoreMelaX;
+                if (playerX > melaX) {
+                    input[3] = valoreMelaX;
                     input[1] = 0d;
                 } else {
                     input[3] = 0d;
                     input[1] = valoreMelaX;
                 }
+                
+                input[4] = 0;
+                input[5] = 0;
+                input[6] = 0;
+                input[7] = 0;
 
                 thisCreatura.setInput(input);
                 System.out.println("Input: ");
                 for (double thisIn : input) {
                     System.out.print(thisIn + "  ");
                 }
-                System.out.println();
+                System.out.println("\n");
 
                 double[] risultati = thisCreatura.calcola();
                 System.out.println("È risultato: ");
@@ -95,8 +112,28 @@ public class SnekManager extends Thread {
                 }
                 System.out.println();
 
-//                System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione " + direzMaggiore);
+                double valoreMaggiore = -99d;
+                int direzMaggiore = 0;
+
+                for (int k = 0; k < risultati.length; k++) {
+                    if (risultati[k] > valoreMaggiore) {
+                        valoreMaggiore = risultati[k];
+                        direzMaggiore = k;
+                    }
+                }
+
+                System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione " + direzMaggiore);
+                gameThreadPointer.move(direzMaggiore);
             }
+            oldWindow = gameWindow;
+            classifica[numClassifica] = gameThreadPointer.getPunteggio();
+            numClassifica++;
+        }
+
+        System.out.println("\n\nClassifica ordinata:");
+        int[] classificaOrdinata = ordina(classifica);
+        for (int thisPunt : classificaOrdinata) {
+            System.out.println(thisPunt);
         }
 
     }

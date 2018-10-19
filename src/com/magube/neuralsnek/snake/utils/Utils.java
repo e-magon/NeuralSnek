@@ -28,9 +28,10 @@ public class Utils {
 
         return new int[]{x, y};
     }
-    
+
     /**
      * Ritorna un double casuale tra il min e max
+     *
      * @param min
      * @param max
      * @return double generato a caso
@@ -39,23 +40,25 @@ public class Utils {
         double random = new Random().nextDouble();
         return min + (random * (max - min));
     }
-    
+
     /**
      * Prende il valore di una distanza e ritorna un valore tra 0 e 1 in base a
      * quanto è vicino. Come range usa la larghezza ed altezza del canvas
      *
-     * @return 1 se è la cella successiva, 0.1 se è molto lontano, ecc
+     * @param distanza distanza in blocchi
+     * @param verticale
+     * @return double che indica la vicinanza (1 se è la cella successiva, 0.1
+     * se è molto lontano, ecc)
      */
-    public static double map(int distanza, boolean verticale, GameWindow game) {
+    public static double map(int punto1, int punto2, int totale, int blockSize) {
         double valore;
-        if (verticale) {
-            valore = (double) distanza / (game.getCanvas().getHeight() / game.getCanvas().getBlockSize());
-//            System.out.printf("Ho fatto %.2f / %.3f che fa %.2f\n", (double) distanza, (double) (gameWindow.getCanvas().getHeight() / gameWindow.getCanvas().getBlockSize()), valore);
+        if (punto1 > punto2) {
+            valore = (double) (punto1 - punto2) / (totale / blockSize);
         } else {
-            valore = (double) distanza / (game.getCanvas().getWidth() / game.getCanvas().getBlockSize());
-//            System.out.printf("Ho fatto %.2f / %.3f che fa %.2f\n\n", (double) distanza, (double) (gameWindow.getCanvas().getWidth() / gameWindow.getCanvas().getBlockSize()), valore);
+            valore = (double) (punto2 - punto1) / (totale / blockSize);
         }
 
+        //System.out.printf("Ho fatto %.2f / %.3f che fa %.2f\n", (double) distanza, (double) (totale / blockSize), valore);
         return 1 - valore;
     }
 }

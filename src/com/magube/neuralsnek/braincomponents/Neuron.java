@@ -1,4 +1,4 @@
-package com.magube.neuralsnek.brain.components;
+package com.magube.neuralsnek.braincomponents;
 
 import java.util.ArrayList;
 
@@ -70,7 +70,8 @@ public class Neuron {
                     if (logging) {
                         System.out.println(" quindi ritorno 1");
                     }
-                    return 1;
+                    //return 1;
+                    return result;
                 } else {
                     if (logging) {
                         System.out.println(" quindi ritorno 0");

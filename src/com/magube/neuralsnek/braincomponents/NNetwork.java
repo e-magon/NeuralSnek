@@ -1,4 +1,4 @@
-package com.magube.neuralsnek.brain.components;
+package com.magube.neuralsnek.braincomponents;
 
 import java.util.ArrayList;
 

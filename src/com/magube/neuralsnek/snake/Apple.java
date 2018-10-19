@@ -43,4 +43,8 @@ public class Apple {
     public void setMaxH(int maxH) {
         this.maxH = maxH;
     }
+    
+    public void setCoords(int[] coords) {
+        this.coords = coords;
+    }
 }

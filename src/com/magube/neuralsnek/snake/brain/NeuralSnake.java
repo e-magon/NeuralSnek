@@ -1,11 +1,10 @@
 package com.magube.neuralsnek.snake.brain;
 
-import com.magube.neuralsnek.brain.components.NNetwork;
+import com.magube.neuralsnek.braincomponents.NNetwork;
 import com.magube.neuralsnek.brain.manager.NNManager;
 import com.magube.neuralsnek.snake.GameWindow;
 import com.magube.neuralsnek.snake.SnakePlayer;
 import com.magube.neuralsnek.snake.utils.Utils;
-import java.util.Random;
 
 /**
  * Questa classe è una creatura Snake con una rete neurale.

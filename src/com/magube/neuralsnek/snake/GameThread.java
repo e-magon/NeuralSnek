@@ -31,7 +31,7 @@ public class GameThread extends Thread {
 
         punteggio = 0;
 
-        //canvas.setApple(apple);
+        canvas.setApple(apple);
         canvas.setPlayer(player);
 
         moved = false;
@@ -45,12 +45,14 @@ public class GameThread extends Thread {
     public void run() {
         Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti perde subito
 
-        int maxWidth = canvas.getWidth() / canvas.getBlockSize();
-        int maxHeight = canvas.getHeight() / canvas.getBlockSize();
+//        int maxWidth = canvas.getWidth() / canvas.getBlockSize();
+//        int maxHeight = canvas.getHeight() / canvas.getBlockSize();
+        int maxWidth = 35, maxHeight = 24;
 
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);
         apple.newCoord();
+        //apple.setCoords(new int[]{15, 7});    //PER DEBUG
 
         while (!perso) {
             if (!ready) {
@@ -90,6 +92,8 @@ public class GameThread extends Thread {
                 ready = false;
             }
         }
+
+        labelPerso.setVisible(true);
     }
 
     public void move(int direzione) {
@@ -112,5 +116,13 @@ public class GameThread extends Thread {
 
     public boolean isPerso() {
         return perso;
+    }
+
+    public void setPerso(boolean perso) {
+        this.perso = perso;
+    }
+
+    public int getPunteggio() {
+        return punteggio;
     }
 }
