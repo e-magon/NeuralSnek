@@ -82,6 +82,7 @@ public class LauncherWindow extends javax.swing.JFrame {
 
     private void butNewNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butNewNetActionPerformed
         SnekManager manager = new SnekManager();
+        manager.start();
     }//GEN-LAST:event_butNewNetActionPerformed
 
     public static void main(String args[]) {

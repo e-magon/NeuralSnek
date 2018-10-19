@@ -1,44 +1,45 @@
 package com.magube.neuralsnek.snake.brain;
 
-import com.magube.neuralsnek.snake.Apple;
 import com.magube.neuralsnek.snake.GameThread;
 import com.magube.neuralsnek.snake.GameWindow;
-import com.magube.neuralsnek.snake.SnakePlayer;
 import com.magube.neuralsnek.snake.utils.Utils;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SnekManager {
+public class SnekManager extends Thread {
 
     private final int numCreature;
     private final NeuralSnake[] creature;
 
     private GameWindow gameWindow;
-    private GameThread gameThread;
-    private Apple apple;
+    
+    private GameThread threadPointer;
 
     public SnekManager() {
         numCreature = 3;
         creature = new NeuralSnake[numCreature];
+    }
 
+    @Override
+    public void run() {
         for (NeuralSnake creatura : creature) {
-            creatura = new NeuralSnake(8, 2, 8, 4, 0.5, true);
+            creatura = new NeuralSnake(8, 2, 8, 4, 0.5, false);
             creatura.creaRete();
             creatura.getCorpo();
         }
+
         gameWindow = new GameWindow(false);
         gameWindow.setLocationRelativeTo(null);
         gameWindow.setVisible(true);
+        threadPointer = gameWindow.getGameThread();
         
-        apple = new Apple(creature[0].getCorpo().getCoords());
-        apple.newCoord();
-        
-        Utils.sleep(500);
-
-        gameThread = new GameThread(gameWindow.getCanvas(), creature[0].getCorpo(),
-                apple, gameWindow.getLabelPunti(), gameWindow.getLabelPerso(), true);
-        
-        
+        threadPointer.start();
+        Utils.sleep(300);
+        threadPointer.setPronto(true);
+        Utils.sleep(300);
+        threadPointer.setPronto(true);
+        Utils.sleep(300);
+        threadPointer.setPronto(true);
     }
 
     public int[] ordina(int[] punteggiOttenuti) {

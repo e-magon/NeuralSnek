@@ -39,6 +39,7 @@ public class NeuralSnake extends Thread {
         this.logging = logging;
         
         corpo = new SnakePlayer();
+        Utils.sleep(300);
     }
 
     public void creaRete() {

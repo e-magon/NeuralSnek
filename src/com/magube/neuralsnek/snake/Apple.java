@@ -9,17 +9,13 @@ public class Apple {
     private int[] coords;
     private ArrayList<int[]> playerCoords;
 
-    public Apple(ArrayList playerCoords) {
-        this.playerCoords = playerCoords;
-    }
-
     public void newCoord() {
         boolean trovato = false;
-        
+
         while (!trovato) {
             coords = Utils.randomPos(maxW, maxH);
             trovato = true;
-            
+
             for (int[] thisBlock : playerCoords) {
                 if (thisBlock[0] == coords[0] && thisBlock[1] == coords[1]) {
                     //Non va bene, il blocco è occupato da snek
@@ -28,7 +24,7 @@ public class Apple {
                 }
             }
         }
-        
+
         System.out.println("Disegno la mela a " + coords[0] + " " + coords[1]);
     }
 
@@ -42,5 +38,13 @@ public class Apple {
 
     public void setMaxH(int maxH) {
         this.maxH = maxH;
+    }
+
+    public ArrayList<int[]> getPlayerCoords() {
+        return playerCoords;
+    }
+
+    public void setPlayerCoords(ArrayList<int[]> playerCoords) {
+        this.playerCoords = playerCoords;
     }
 }
