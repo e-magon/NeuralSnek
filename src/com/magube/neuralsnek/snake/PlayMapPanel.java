@@ -76,6 +76,8 @@ public class PlayMapPanel extends JPanel {
 
             //Disegno della mela
             if (apple != null && apple.getCoords() != null) {
+            //if (true) {
+                System.out.println("AAAAAA");
                 cord = getPixelCoords(apple.getCoords()[0], apple.getCoords()[1]);
                 drawBlock(g, cord[0], cord[1], appleColor);
             }

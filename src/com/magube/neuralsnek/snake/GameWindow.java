@@ -36,8 +36,7 @@ public class GameWindow extends javax.swing.JFrame {
         }
 
         player = new SnakePlayer();
-        apple = new Apple();
-        apple.setPlayerCoords(player.getCoords());
+        apple = new Apple(player.getCoords());
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso, playable);
         canvas.repaint();
     }
@@ -187,7 +186,6 @@ public class GameWindow extends javax.swing.JFrame {
 
     public void setPlayer(SnakePlayer player) {
         this.player = player;
-        apple.setPlayerCoords(player.getCoords());
     }
 
     public Apple getApple() {

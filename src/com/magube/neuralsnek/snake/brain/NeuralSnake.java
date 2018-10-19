@@ -106,7 +106,7 @@ public class NeuralSnake extends Thread {
     }
 
     public double[] calcola() {
-        //Ritorna una matrice: il risultato di ogni rete
+        //Ritorna un array con il risultato della rete
         double[] risultato = new double[outputNeu];
 
         //Per ogni neurone di input di questa rete, metti il corrispettivo input
@@ -125,25 +125,6 @@ public class NeuralSnake extends Thread {
         nnManager.creaReti();
         nnManager.generaPesi();
 
-    }
-
-    /**
-     * Prende il valore di una distanza e ritorna un valore tra 0 e 1 in base a
-     * quanto è vicino. Come range usa la larghezza ed altezza del canvas
-     *
-     * @return 1 se è la cella successiva, 0.1 se è molto lontano, ecc
-     */
-    public double map(int distanza, boolean verticale, GameWindow game) {
-        double valore;
-        if (verticale) {
-            valore = (double) distanza / (game.getCanvas().getHeight() / game.getCanvas().getBlockSize());
-//            System.out.printf("Ho fatto %.2f / %.3f che fa %.2f\n", (double) distanza, (double) (gameWindow.getCanvas().getHeight() / gameWindow.getCanvas().getBlockSize()), valore);
-        } else {
-            valore = (double) distanza / (game.getCanvas().getWidth() / game.getCanvas().getBlockSize());
-//            System.out.printf("Ho fatto %.2f / %.3f che fa %.2f\n\n", (double) distanza, (double) (gameWindow.getCanvas().getWidth() / gameWindow.getCanvas().getBlockSize()), valore);
-        }
-
-        return 1 - valore;
     }
 
     public boolean isLogging() {
