@@ -13,29 +13,32 @@ public class SnekManager extends Thread {
     private final int mosseTotali;
     private final double soglie;
 
-    private GameWindow gameWindow;
+    private final int attesa; //tra un frame e l'altro in ms
 
+    private GameWindow gameWindow;
     private GameThread gameThreadPointer;
 
     public SnekManager() {
-        numCreature = 100;
-        mosseTotali = 30;
-        soglie = 0.2;
+        numCreature = 1;
+        mosseTotali = 2000;
+        soglie = 0.8;
         creature = new NeuralSnake[numCreature];
+
+        attesa = 200;
     }
 
     @Override
     public void run() {
         int numClassifica = 0;
-        int[] classifica = new int[numCreature];
+        int[] numMeleMangiate = new int[numCreature];
         GameWindow oldWindow = null;    //Usate per chiudere la finestra precedente dopo aver aperta quella nuova
 
         for (NeuralSnake thisCreatura : creature) {
             Utils.sleep(150);
-            thisCreatura = new NeuralSnake(4, 2, 8, 4, soglie, true);
+            thisCreatura = new NeuralSnake(8, 3, 6, 3, soglie, false);
             thisCreatura.creaRete();
 
-            gameWindow = new GameWindow(false);
+            gameWindow = new GameWindow(false, thisCreatura.getCorpo());
             gameWindow.setLocationRelativeTo(null);
             gameWindow.setTitle("NeuralSnek - Addestra - creatura n. " + numClassifica);
             gameWindow.setVisible(true);
@@ -55,24 +58,29 @@ public class SnekManager extends Thread {
                     Utils.sleep(70);
                     continue;
                 }
-                Utils.sleep(5000);
+                Utils.sleep(attesa);
+//                Utils.sleep(1000);
                 gameThreadPointer.setPronto(true);
 
                 mosseRimanenti--;
-                
+
                 if (gameThreadPointer.isPerso() || mosseRimanenti <= 0) {
                     gameThreadPointer.setPerso(true);
+                    if (mosseRimanenti <= 0) {
+                        System.err.println("Perso per mosse!");
+                    }
                     break;
                 }
 
                 int playerX = gameWindow.getPlayer().getCoords().get(0)[0];
                 int playerY = gameWindow.getPlayer().getCoords().get(0)[1];
 
+                //Distanza dalla mela
                 int melaX = gameWindow.getApple().getCoords()[0];
                 int melaY = gameWindow.getApple().getCoords()[1];
 
-                double valoreMelaX = Utils.map(melaX, playerX, gameWindow.getWidth(), gameWindow.getCanvas().getBlockSize());
-                double valoreMelaY = Utils.map(melaY, playerY, gameWindow.getHeight(), gameWindow.getCanvas().getBlockSize());
+                double valoreMelaX = Utils.mapDistance(melaX, playerX, gameWindow.getWidth(), gameWindow.getCanvas().getBlockSize());
+                double valoreMelaY = Utils.mapDistance(melaY, playerY, gameWindow.getHeight(), gameWindow.getCanvas().getBlockSize());
 
                 //valoreMelaX *= 10;
                 //valoreMelaY *= 10;
@@ -92,16 +100,24 @@ public class SnekManager extends Thread {
                     input[3] = 0d;
                     input[1] = valoreMelaX;
                 }
-                
-                input[4] = 0;
-                input[5] = 0;
-                input[6] = 0;
-                input[7] = 0;
+
+                //Distanza dai muri
+                int larghezzaMappa = gameWindow.getWidth() / gameWindow.getCanvas().getBlockSize();     //35
+                int altezzaMappa = gameWindow.getHeight() / gameWindow.getCanvas().getBlockSize();      //24
+
+                input[4] = Utils.mapDistance(0, playerY, gameWindow.getHeight(), gameWindow.getCanvas().getBlockSize());
+                input[5] = Utils.mapDistance(larghezzaMappa, playerX, gameWindow.getWidth(), gameWindow.getCanvas().getBlockSize());
+                input[6] = Utils.mapDistance(altezzaMappa, playerY, gameWindow.getHeight(), gameWindow.getCanvas().getBlockSize());
+                input[7] = Utils.mapDistance(0, playerX, gameWindow.getWidth(), gameWindow.getCanvas().getBlockSize());
 
                 thisCreatura.setInput(input);
                 System.out.println("Input: ");
-                for (double thisIn : input) {
-                    System.out.print(thisIn + "  ");
+                for (int k = 0; k < 4; k++) {
+                    System.out.printf("%.3f ", input[k]);
+                }
+                System.out.println();
+                for (int k = 4; k < 8; k++) {
+                    System.out.printf("%.3f ", input[k]);
                 }
                 System.out.println("\n");
 
@@ -112,6 +128,8 @@ public class SnekManager extends Thread {
                 }
                 System.out.println();
 
+                //La rete decide la direzione assoluta (non va bene, a volte decide di andare al contrario e non può)
+                /*
                 double valoreMaggiore = -99d;
                 int direzMaggiore = 0;
 
@@ -124,16 +142,49 @@ public class SnekManager extends Thread {
 
                 System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione " + direzMaggiore);
                 gameThreadPointer.move(direzMaggiore);
+                System.out.println("direzione attuale: " + thisCreatura.getCorpo().getDirezioneTesta());
+                 */
+                double valoreMaggiore = -99d;
+                int direzioneScelta = 0;        //-1 antiorario, 0 dritto, 1 orario
+
+                for (int k = 0; k < risultati.length; k++) {
+                    if (risultati[k] > valoreMaggiore) {
+                        valoreMaggiore = risultati[k];
+                        direzioneScelta = k;
+                    }
+                }
+
+                switch (direzioneScelta) {
+                    case 0:
+                        direzioneScelta = 3;
+                        break;
+                    case 1:
+                        direzioneScelta = 0;
+                        break;
+                    case 2:
+                        direzioneScelta = 1;
+                        break;
+                }
+
+                System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione relativa scelta: " + direzioneScelta);
+                int direzAttuale = thisCreatura.getCorpo().getDirezioneTesta();
+                System.out.println("direz attuale " + direzAttuale);
+                System.out.println("direz assoluta scelta " + (direzioneScelta + direzAttuale) % 4);
+                if (!gameThreadPointer.isMoved()) {
+                    gameThreadPointer.move((direzioneScelta + direzAttuale) % 4);
+                }
+
             }
+
             oldWindow = gameWindow;
-            classifica[numClassifica] = gameThreadPointer.getPunteggio();
+            numMeleMangiate[numClassifica] = gameThreadPointer.getPunteggio();
             numClassifica++;
         }
 
         System.out.println("\n\nClassifica ordinata:");
-        int[] classificaOrdinata = ordina(classifica);
-        for (int thisPunt : classificaOrdinata) {
-            System.out.println(thisPunt);
+        int[] classificaOrdinata = ordina(numMeleMangiate);
+        for (int thisSnake : classificaOrdinata) {
+            System.out.println("Creatura " + thisSnake + " con mele mangiate: " + numMeleMangiate[thisSnake]);
         }
 
     }

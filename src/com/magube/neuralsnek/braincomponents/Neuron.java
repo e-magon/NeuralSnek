@@ -42,12 +42,11 @@ public class Neuron {
         if (isInputNeuron) {
             if (logging) {
                 System.out.println(this.getNome() + ": Sono di input "
-                        + "quindi ritorno il mio valore per il peso: "
-                        + inputNeuronValue + " * " + inputWeights.get(0) + " = "
-                        + (inputNeuronValue * inputWeights.get(0)));
+                        + "quindi ritorno il mio valore: "
+                        + inputNeuronValue);
             }
 
-            return inputNeuronValue * inputWeights.get(0);
+            return inputNeuronValue;
         } else if ((previousNeurons.size() == inputWeights.size())) {
             //Se ha lo stesso numero di pesi e input, cioè è impostato correttamente
             double result = 0;
@@ -68,9 +67,11 @@ public class Neuron {
 
                 if (result >= soglia) {
                     if (logging) {
-                        System.out.println(" quindi ritorno 1");
+                        System.out.println(" quindi ritorno il mio valore (max 1)");
                     }
                     //return 1;
+                    if (result >= 1)
+                        return 1;
                     return result;
                 } else {
                     if (logging) {

@@ -60,7 +60,7 @@ public class SnakePlayer {
      *
      * @return true se colpisce se stesso
      */
-    public boolean checkCollision() {
+    public boolean checkSelfCollision() {
         //La testa avanza di 1 rispetto alla sua direzione
         int[] newCoords = playerCoords.get(0).clone();
 

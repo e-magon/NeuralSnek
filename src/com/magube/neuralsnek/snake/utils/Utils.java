@@ -50,7 +50,7 @@ public class Utils {
      * @return double che indica la vicinanza (1 se è la cella successiva, 0.1
      * se è molto lontano, ecc)
      */
-    public static double map(int punto1, int punto2, int totale, int blockSize) {
+    public static double mapDistance(int punto1, int punto2, int totale, int blockSize) {
         double valore;
         if (punto1 > punto2) {
             valore = (double) (punto1 - punto2) / (totale / blockSize);

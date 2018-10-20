@@ -45,9 +45,9 @@ public class GameThread extends Thread {
     public void run() {
         Utils.sleep(200); //Aspetta l'inizializzazione del player, altrimenti perde subito
 
-//        int maxWidth = canvas.getWidth() / canvas.getBlockSize();
-//        int maxHeight = canvas.getHeight() / canvas.getBlockSize();
-        int maxWidth = 35, maxHeight = 24;
+        int maxWidth = canvas.getWidth() / canvas.getBlockSize();
+        int maxHeight = canvas.getHeight() / canvas.getBlockSize();
+//        int maxWidth = 35, maxHeight = 24;
 
         apple.setMaxW(maxWidth);
         apple.setMaxH(maxHeight);
@@ -60,7 +60,7 @@ public class GameThread extends Thread {
                 continue;
             }
 
-            boolean snakeHit = player.checkCollision();
+            boolean snakeHit = player.checkSelfCollision();
             int[] nextPos = player.muovi();
 
             boolean isXok = (nextPos[0] > 0) && (nextPos[0] <= maxWidth);
@@ -124,5 +124,9 @@ public class GameThread extends Thread {
 
     public int getPunteggio() {
         return punteggio;
+    }
+
+    public boolean isMoved() {
+        return moved;
     }
 }

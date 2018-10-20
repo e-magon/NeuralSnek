@@ -11,7 +11,7 @@ import com.magube.neuralsnek.snake.utils.Utils;
  *
  * @author emanuelemagon
  */
-public class NeuralSnake extends Thread {
+public class NeuralSnake {
 
     NNManager nnManager;
     GameWindow[] gameWindows;
@@ -36,7 +36,7 @@ public class NeuralSnake extends Thread {
         this.soglie = soglie;
 
         this.logging = logging;
-        
+
         corpo = new SnakePlayer();
         Utils.sleep(300);
     }
@@ -50,9 +50,9 @@ public class NeuralSnake extends Thread {
 
         //Collega le reti
         cervello.collega();
-        
+
         //genera i pesi
-        generaPesi(cervello);
+        generaPesi(cervello, 0, 1);
 
         //Info
         System.out.println(cervello.getInfo());
@@ -69,13 +69,11 @@ public class NeuralSnake extends Thread {
         }
     }
 
-    public void generaPesi(NNetwork cervello) {
-        double min = 0;
-        double max = 1;
+    public void generaPesi(NNetwork cervello, double min, double max) {
         double[] randomPesi = null;
 
-        for (int livello = 0; livello < cervello.getTotalLayersNumber(); livello++) {
-            //Per ogni livello:
+        for (int livello = 1; livello < cervello.getTotalLayersNumber(); livello++) {
+            //Per ogni livello (parte da 1 perchè input non ha pesi):
             for (int neu = 0; neu < cervello.getLayerSize(livello); neu++) {
                 //Per ogni neurone di questo livello:
                 if (livello == 0) {
@@ -117,13 +115,6 @@ public class NeuralSnake extends Thread {
         risultato = cervello.compute();
 
         return risultato;
-    }
-
-    @Override
-    public void run() {
-        nnManager.creaReti();
-        nnManager.generaPesi();
-
     }
 
     public boolean isLogging() {

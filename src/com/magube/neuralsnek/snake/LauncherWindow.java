@@ -98,6 +98,10 @@ public class LauncherWindow extends javax.swing.JFrame {
                 LauncherWindow finestra = new LauncherWindow();
                 finestra.setLocationRelativeTo(null);
                 finestra.setVisible(true);
+                
+                SnekManager manager = new SnekManager();
+                manager.start();
+                finestra.dispose();
             }
         });
     }

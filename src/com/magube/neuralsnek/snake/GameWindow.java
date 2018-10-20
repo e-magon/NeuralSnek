@@ -20,6 +20,17 @@ public class GameWindow extends javax.swing.JFrame {
         this.getContentPane().setBackground(new Color(70, 70, 70)); //Grigio scuro
         this.playable = playable;
 
+        player = new SnakePlayer();
+        initGame();
+    }
+    
+    public GameWindow(boolean playable, SnakePlayer player) {
+        initComponents();
+        this.getContentPane().setBackground(new Color(70, 70, 70)); //Grigio scuro
+        this.playable = playable;
+
+        
+        this.player = player;
         initGame();
     }
 
@@ -35,7 +46,6 @@ public class GameWindow extends javax.swing.JFrame {
             butRiavvia.setVisible(false);
         }
 
-        player = new SnakePlayer();
         apple = new Apple(player.getCoords());
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso, playable);
         canvas.repaint();
