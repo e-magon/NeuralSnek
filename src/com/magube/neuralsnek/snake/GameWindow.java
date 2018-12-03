@@ -28,8 +28,7 @@ public class GameWindow extends javax.swing.JFrame {
         initComponents();
         this.getContentPane().setBackground(new Color(70, 70, 70)); //Grigio scuro
         this.playable = playable;
-
-        
+    
         this.player = player;
         initGame();
     }
