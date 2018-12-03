@@ -13,7 +13,6 @@ public class NeuralSnekManager extends Thread {
     private final int mosseTotali;
     private final int numGenerazioni;
     private final double soglie;
-    private boolean hasMoved;    //Variabile usata per vedere se si è già mosso in questo frame
 
     private final int attesa; //tra un frame e l'altro in ms
 
@@ -60,11 +59,7 @@ public class NeuralSnekManager extends Thread {
                 Utils.sleep(150);
                 while (true) {
                     if (gameWindow.getApple().getCoords() == null || gameWindow.getPlayer().getCoords().get(0) == null) {
-                        Utils.sleep(70);
-                        continue;
-                    }
-                    if (hasMoved) {
-                        Utils.sleep(70);
+                        Utils.sleep(100);
                         continue;
                     }
 
@@ -181,10 +176,7 @@ public class NeuralSnekManager extends Thread {
                     System.out.println("direz attuale " + direzAttuale);
                     System.out.println("direz assoluta scelta " + (direzioneScelta + direzAttuale) % 4);
 
-                    if (!hasMoved) {
-                        gameThreadPointer.move((direzioneScelta + direzAttuale) % 4);
-                        //this.hasMoved = true;
-                    }
+                    gameThreadPointer.move((direzioneScelta + direzAttuale) % 4);
 
                 }
 
