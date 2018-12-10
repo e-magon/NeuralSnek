@@ -13,7 +13,6 @@ public class NeuralSnekManager extends Thread {
     private final int mosseTotali;
     private final int numGenerazioni;
     private final double soglie;
-    private boolean hasMoved;    //Variabile usata per vedere se si è già mosso in questo frame
 
     private final int attesa; //tra un frame e l'altro in ms
 
@@ -21,13 +20,13 @@ public class NeuralSnekManager extends Thread {
     private GameThread gameThreadPointer;
 
     public NeuralSnekManager() {
-        numCreature = 10;
+        numCreature = 15;
         mosseTotali = 2000;
         numGenerazioni = 5;
         soglie = 0.8;
         creature = new NeuralSnake[numCreature];
 
-        attesa = 20;
+        attesa = 40;
     }
 
     @Override
@@ -38,20 +37,20 @@ public class NeuralSnekManager extends Thread {
             int numClassifica = 0;
             numMeleMangiate = new int[numCreature];
             GameWindow oldWindow = null;    //Usate per chiudere la finestra precedente dopo aver aperta quella nuova
-            
+
             //For che riempie array di nuove creature
-            for (int k=0; k<numCreature; k++) {
+            for (int k = 0; k < numCreature; k++) {
                 creature[k] = new NeuralSnake(8, 3, 6, 3, soglie, false);
                 creature[k].creaRete();
             }
 
             for (NeuralSnake thisCreatura : creature) {
                 Utils.sleep(150);
-                
 
+                oldWindow = gameWindow;
                 gameWindow = new GameWindow(false, thisCreatura.getCorpo());
                 gameWindow.setLocationRelativeTo(null);
-                gameWindow.setTitle("NeuralSnek - Addestra - Generazione " + thisGenerazione +  " - creatura n. " + numClassifica);
+                gameWindow.setTitle("NeuralSnek - Addestra - Generazione " + thisGenerazione + " - creatura n. " + numClassifica);
                 gameWindow.setVisible(true);
                 if (oldWindow != null) {
                     oldWindow.dispose();
@@ -65,12 +64,9 @@ public class NeuralSnekManager extends Thread {
 
                 Utils.sleep(150);
                 while (true) {
+                    //Aspetta a partire fino a quando la finestra di gioco non è pronta
                     if (gameWindow.getApple().getCoords() == null || gameWindow.getPlayer().getCoords().get(0) == null) {
-                        Utils.sleep(70);
-                        continue;
-                    }
-                    if (hasMoved) {
-                        Utils.sleep(70);
+                        Utils.sleep(100);
                         continue;
                     }
 
@@ -182,32 +178,31 @@ public class NeuralSnekManager extends Thread {
                             break;
                     }
 
-                    System.out.println("Il valore maggiore è " + valoreMaggiore + " con direzione relativa scelta: " + direzioneScelta);
                     int direzAttuale = thisCreatura.getCorpo().getDirezioneTesta();
                     System.out.println("direz attuale " + direzAttuale);
-                    System.out.println("direz assoluta scelta " + (direzioneScelta + direzAttuale) % 4);
+                    int newDir = (direzioneScelta + direzAttuale) % 4;
+                    System.out.println("direz assoluta scelta " + newDir);
 
-                    if (!hasMoved) {
-                        gameThreadPointer.move((direzioneScelta + direzAttuale) % 4);
-                        //this.hasMoved = true;
-                    }
-
+                    if (!gameThreadPointer.moved)
+                        gameThreadPointer.move(newDir);
+                    newDir = 0;
                 }
-
-                oldWindow = gameWindow;
-                numMeleMangiate[numClassifica] = gameThreadPointer.getPunteggio();
-                numClassifica++;
             }
 
-            System.out.println("\n\nClassifica ordinata:");
-            classificaOrdinata = ordina(numMeleMangiate);
-            for (int thisSnake : classificaOrdinata) {
-                System.out.println("Creatura " + thisSnake + " con mele mangiate: " + numMeleMangiate[thisSnake]);
-            }
-            
-            Utils.sleep(50);
-            newGeneration(classificaOrdinata, 0.05, creature);
+            oldWindow = gameWindow;
+            numMeleMangiate[numClassifica] = gameThreadPointer.getPunteggio();
+            numClassifica++;
         }
+
+        System.out.println("\n\nClassifica ordinata:");
+        classificaOrdinata = ordina(numMeleMangiate);
+        for (int thisSnake : classificaOrdinata) {
+            System.out.println("Creatura " + thisSnake + " con mele mangiate: " + numMeleMangiate[thisSnake]);
+        }
+
+        Utils.sleep(50);
+        newGeneration(classificaOrdinata, 0.05, creature);
+
     }
 
     public int[] ordina(int[] punteggiOttenuti) {

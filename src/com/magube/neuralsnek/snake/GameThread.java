@@ -9,7 +9,7 @@ public class GameThread extends Thread {
     private final SnakePlayer player;
     private final Apple apple;
 
-    private boolean moved;
+    public boolean moved;
     private boolean ready;
     private final int TARGET_FPS;
     private final boolean playable;
@@ -56,7 +56,7 @@ public class GameThread extends Thread {
 
         while (!perso) {
             if (!ready) {
-                Utils.sleep(1);
+                Utils.sleep(10);
                 continue;
             }
 
@@ -83,6 +83,7 @@ public class GameThread extends Thread {
                 }
 
                 canvas.repaint();
+                Utils.sleep(10);
                 moved = false;
             }
 
@@ -99,9 +100,13 @@ public class GameThread extends Thread {
     public synchronized void move(int direzione) {
         if (!moved) {
             //Se la prossima direzione è l'opposto di quella attuale, non muoverti
-            if (player.getDirezioneTesta() != ((direzione + 2) % 4)) {
+            //if (player.getDirezioneTesta() != ((direzione + 2) % 4)) {
+            if (((direzione + 2) % 4) != player.getDirezioneTesta()) {
                 player.setDirezioneTesta(direzione);
                 moved = true;
+            }
+            else {
+                System.out.printf("Non posso muovermi, direzione attuale %d, nuova dir %d\n", player.getDirezioneTesta(), direzione);
             }
         }
     }

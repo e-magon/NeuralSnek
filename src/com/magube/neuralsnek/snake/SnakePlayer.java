@@ -108,11 +108,11 @@ public class SnakePlayer {
         playerCoords.add(new int[]{ultimoPezzo[0], ultimoPezzo[1]});
     }
 
-    public int getDirezioneTesta() {
+    public synchronized int getDirezioneTesta() {
         return direzioneTesta;
     }
 
-    public void setDirezioneTesta(int direzioneTesta) {
+    public synchronized void setDirezioneTesta(int direzioneTesta) {
         this.direzioneTesta = direzioneTesta;
     }
 
