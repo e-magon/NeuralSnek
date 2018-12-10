@@ -96,7 +96,7 @@ public class GameThread extends Thread {
         labelPerso.setVisible(true);
     }
 
-    public synchronized void move(int direzione) {
+    public void move(int direzione) {
         if (!moved) {
             //Se la prossima direzione è l'opposto di quella attuale, non muoverti
             if (player.getDirezioneTesta() != (direzione + 2) % 4) {
@@ -126,7 +126,7 @@ public class GameThread extends Thread {
         return punteggio;
     }
 
-    public synchronized boolean isMoved() {
+    public boolean isMoved() {
         return moved;
     }
 }
