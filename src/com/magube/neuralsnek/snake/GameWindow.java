@@ -39,6 +39,7 @@ public class GameWindow extends javax.swing.JFrame {
         labelPunti.setText("Punteggio: 0");
 
         if (playable) {
+            player = new SnakePlayer();
             labelComandi.setText("Premi W per iniziare");
             paused = true;
         } else {

@@ -91,10 +91,6 @@ public class LauncherWindow extends javax.swing.JFrame {
                 LauncherWindow finestra = new LauncherWindow();
                 finestra.setLocationRelativeTo(null);
                 finestra.setVisible(true);
-                
-                NeuralSnekManager manager = new NeuralSnekManager();
-                manager.start();
-                finestra.dispose();
             }
         });
     }

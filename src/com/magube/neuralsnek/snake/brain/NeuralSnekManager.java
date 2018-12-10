@@ -21,7 +21,7 @@ public class NeuralSnekManager extends Thread {
     private GameThread gameThreadPointer;
 
     public NeuralSnekManager() {
-        numCreature = 10;
+        numCreature = 5;
         mosseTotali = 2000;
         numGenerazioni = 5;
         soglie = 0.8;
@@ -34,6 +34,7 @@ public class NeuralSnekManager extends Thread {
     public void run() {
         int[] classificaOrdinata = null, numMeleMangiate = null;
         for (int thisGenerazione = 0; thisGenerazione < numGenerazioni; thisGenerazione++) {
+            System.out.println("New gen");
             int numClassifica = 0;
             numMeleMangiate = new int[numCreature];
             GameWindow oldWindow = null;    //Usate per chiudere la finestra precedente dopo aver aperta quella nuova
