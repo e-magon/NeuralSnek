@@ -28,7 +28,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="butLoad" alignment="0" max="32767" attributes="0"/>
                   <Component id="butNewNet" alignment="0" max="32767" attributes="0"/>
                   <Component id="butNewGame" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -43,9 +42,7 @@
               <Component id="butNewGame" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="butNewNet" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="butLoad" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -68,12 +65,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butNewNetActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="butLoad">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Carica addestramento"/>
-        <Property name="focusPainted" type="boolean" value="false"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

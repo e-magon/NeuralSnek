@@ -20,7 +20,6 @@ public class LauncherWindow extends javax.swing.JFrame {
 
         butNewGame = new javax.swing.JButton();
         butNewNet = new javax.swing.JButton();
-        butLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Snake");
@@ -42,9 +41,6 @@ public class LauncherWindow extends javax.swing.JFrame {
             }
         });
 
-        butLoad.setText("Carica addestramento");
-        butLoad.setFocusPainted(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -52,7 +48,6 @@ public class LauncherWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(butLoad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(butNewNet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(butNewGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -64,9 +59,7 @@ public class LauncherWindow extends javax.swing.JFrame {
                 .addComponent(butNewGame)
                 .addGap(18, 18, 18)
                 .addComponent(butNewNet)
-                .addGap(18, 18, 18)
-                .addComponent(butLoad)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,14 +93,13 @@ public class LauncherWindow extends javax.swing.JFrame {
                 finestra.setVisible(true);
                 
                 NeuralSnekManager manager = new NeuralSnekManager();
-                //manager.start();
-                //finestra.dispose();
+                manager.start();
+                finestra.dispose();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton butLoad;
     private javax.swing.JButton butNewGame;
     private javax.swing.JButton butNewNet;
     // End of variables declaration//GEN-END:variables

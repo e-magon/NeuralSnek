@@ -28,7 +28,8 @@ public class GameWindow extends javax.swing.JFrame {
         initComponents();
         this.getContentPane().setBackground(new Color(70, 70, 70)); //Grigio scuro
         this.playable = playable;
-    
+
+        
         this.player = player;
         initGame();
     }
@@ -46,7 +47,6 @@ public class GameWindow extends javax.swing.JFrame {
         }
 
         apple = new Apple(player.getCoords());
-        player = new SnakePlayer();
         gameThread = new GameThread(canvas, player, apple, labelPunti, labelPerso, playable);
         canvas.repaint();
     }
