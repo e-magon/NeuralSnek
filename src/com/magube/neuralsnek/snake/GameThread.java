@@ -96,10 +96,10 @@ public class GameThread extends Thread {
         labelPerso.setVisible(true);
     }
 
-    public void move(int direzione) {
+    public synchronized void move(int direzione) {
         if (!moved) {
             //Se la prossima direzione è l'opposto di quella attuale, non muoverti
-            if (player.getDirezioneTesta() != (direzione + 2) % 4) {
+            if (player.getDirezioneTesta() != ((direzione + 2) % 4)) {
                 player.setDirezioneTesta(direzione);
                 moved = true;
             }
