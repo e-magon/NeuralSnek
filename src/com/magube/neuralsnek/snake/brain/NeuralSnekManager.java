@@ -21,7 +21,7 @@ public class NeuralSnekManager extends Thread {
     private GameThread gameThreadPointer;
 
     public NeuralSnekManager() {
-        numCreature = 5;
+        numCreature = 10;
         mosseTotali = 2000;
         numGenerazioni = 5;
         soglie = 0.8;
@@ -38,15 +38,20 @@ public class NeuralSnekManager extends Thread {
             int numClassifica = 0;
             numMeleMangiate = new int[numCreature];
             GameWindow oldWindow = null;    //Usate per chiudere la finestra precedente dopo aver aperta quella nuova
+            
+            //For che riempie array di nuove creature
+            for (int k=0; k<numCreature; k++) {
+                creature[k] = new NeuralSnake(8, 3, 6, 3, soglie, false);
+                creature[k].creaRete();
+            }
 
             for (NeuralSnake thisCreatura : creature) {
                 Utils.sleep(150);
-                thisCreatura = new NeuralSnake(8, 3, 6, 3, soglie, false);
-                thisCreatura.creaRete();
+                
 
                 gameWindow = new GameWindow(false, thisCreatura.getCorpo());
                 gameWindow.setLocationRelativeTo(null);
-                gameWindow.setTitle("NeuralSnek - Addestra - creatura n. " + numClassifica);
+                gameWindow.setTitle("NeuralSnek - Addestra - Generazione " + thisGenerazione +  " - creatura n. " + numClassifica);
                 gameWindow.setVisible(true);
                 if (oldWindow != null) {
                     oldWindow.dispose();
@@ -201,7 +206,7 @@ public class NeuralSnekManager extends Thread {
             }
             
             Utils.sleep(50);
-            newGeneration(classificaOrdinata, 0.05, creature.clone());
+            newGeneration(classificaOrdinata, 0.05, creature);
         }
     }
 
